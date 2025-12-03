@@ -42,3 +42,35 @@ def user_login():
             msg = "Invalid account"
 
     return render_template("login.html", msg=msg)
+
+# ------------------------------------- Register -------------------------------------
+@app.route("/register", methods=["GET", "POST"])
+def register_user():
+    msg = ""
+    if request.method == "POST":
+        surname = request.form.get("surname", "").strip()
+        firstname = request.form.get("firstname", "").strip()
+        password = request.form.get("password_hash", "")
+        email = request.form.get("email", "").strip()
+        phone = request.form.get("phone", "").strip()
+        username = request.form.get("username", "").strip()
+        role = 'customer'
+
+        
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM users WHERE email=%s", (email,))
+        existing = cur.fetchone()
+
+        if existing:
+            msg = "Email already exists"
+        else:
+            cur.execute("INSERT INTO users (surname, firstname, email, password_hash, phone, username, role) VALUES (%s, %s, %s, %s, %s, %s, %s)", (surname, firstname, email, password, phone, username, role))
+            conn.commit()
+            return redirect(url_for("user_login"))
+            
+        cur.close()
+        conn.close()
+
+    return render_template("register.html", msg=msg)
