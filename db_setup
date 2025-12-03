@@ -1,0 +1,48 @@
+CREATE DATABASE db_hotel;
+USE db_hotel;
+
+CREATE TABLE users(
+    user_id int AUTO_INCREMENT PRIMARY KEY,
+    surname varchar(50),
+    firstname varchar(50),
+    username varchar(50),
+    email varchar(50),
+    password_hash varchar(255),
+    phone varchar(50),
+    created_at timestamp,
+    role enum('admin','customer')
+)
+
+CREATE TABLE rooms (
+    room_id int AUTO_INCREMENT PRIMARY KEY,
+    room_number varchar(10),
+    room_type enum('single_room','double_room','twin_room','premium_room','deluxe_room','executive_room'),
+    floor_number int,
+    status enum('available','occupied','maintenance','unavailable'),
+    amount decimal(10,2)
+)
+
+CREATE TABLE bookings (
+    id int AUTO_INCREMENT PRIMARY KEY,
+    registered_name varchar(100),
+    customer_id int,
+    room_id int,
+    checkin_date date,
+    checkout_date date,
+    total_amount decimal(10,2)
+)
+
+ALTER TABLE bookings
+ADD CONSTRAINT bookings_ibfk_1
+FOREIGN KEY (customer_id)
+REFERENCES users(user_id)
+
+ALTER TABLE bookings
+ADD CONSTRAINT bookings_ibfk_2
+FOREIGN KEY (room_id)
+REFERENCES rooms(room_id)
+
+ALTER TABLE bookings
+ADD CONSTRAINT bookings_ibfk_3
+FOREIGN KEY (customer_id)
+REFERENCES users(user_id)
