@@ -74,3 +74,9 @@ def register_user():
         conn.close()
 
     return render_template("register.html", msg=msg)
+
+# ------------------------------------- Logout -------------------------------------
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("dashboard"))
