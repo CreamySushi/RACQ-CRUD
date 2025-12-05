@@ -1,0 +1,50 @@
+<!-- About Header -->
+<header style="height: 50vh; background: var(--color2); display: flex; align-items: center; justify-content: center; text-align: center; color: white;">
+    <div class="container">
+        <h1 style="font-size: 3rem; margin-bottom: 1rem;">About RACQ Hotel</h1>
+        <p>Experience Luxury & Comfort</p>
+    </div>
+</header>
+
+<!-- History Section -->
+<section style="padding: 5rem 0;">
+    <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div>
+            <h2 style="color: var(--color2); margin-bottom: 1.5rem;">Our History</h2>
+            <p style="margin-bottom: 1rem;">
+                Founded in 2023, RACQ Hotel started with a simple vision: to provide a sanctuary of peace and luxury in the heart of the city.
+                Over the years, we have hosted thousands of guests, celebrities, and dignitaries, maintaining a standard of excellence that is unmatched.
+            </p>
+            <p>
+                We believe in sustainable luxury, integrating eco-friendly practices with world-class hospitality.
+            </p>
+        </div>
+        <div>
+            <img src="{{url_for('static', filename='assets/hotel_building.jpg')}}" alt="About Us Image" style="width: 100%; border-radius: 1rem; box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);">
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section style="background: var(--color5); padding: 5rem 0;">
+    <div class="container" style="text-align: center;">
+        <h2 style="color: var(--color8); margin-bottom: 2rem;">Our Mission & Vision</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+            <div style="background: white; padding: 2rem; border-radius: 1rem;">
+                <i class="uil uil-star" style="font-size: 2rem; color: var(--color6);"></i>
+                <h4 style="margin: 1rem 0;">Excellence</h4>
+                <p>To provide world-class service to every guest.</p>
+            </div>
+            <div style="background: white; padding: 2rem; border-radius: 1rem;">
+                <i class="uil uil-heart" style="font-size: 2rem; color: var(--color6);"></i>
+                <h4 style="margin: 1rem 0;">Comfort</h4>
+                <p>Ensuring a stay that feels like a home away from home.</p>
+            </div>
+            <div style="background: white; padding: 2rem; border-radius: 1rem;">
+                <i class="uil uil-users-alt" style="font-size: 2rem; color: var(--color6);"></i>
+                <h4 style="margin: 1rem 0;">Community</h4>
+                <p>Building lasting relationships with our patrons.</p>
+            </div>
+        </div>
+    </div>
+</section>
