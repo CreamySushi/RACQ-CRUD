@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/dashboardstyles.css')}}">
+</head>
+<body>
+    <!-------------------------------- NAV -------------------------------->
+    <nav>
+        <div class="container nav_container">
+            <div class="nav_logo">
+                <img src="{{url_for('static', filename='assets/WebsiteLogo.png')}}">
+                <a href="{{url_for('dashboard')}}"><h4>RACQ</h4></a>
+            </div>
+
+            <ul class="nav_menu">
+                <li><a href="#" class="active" onclick="showPage('home_section', event)">Home</a></li>
+                <li><a href="#" onclick="showPage('about_section', event)">About Us</a></li>
+                <li><a href="#" onclick="showPage('rooms_section', event)">Rooms & Suites</a></li>
+                <li><a href="#" onclick="showPage('gallery_section', event)">Gallery</a></li>
+
+                {% if session.get('role') == 'admin' %}
+                <li><a href="#" onclick="showPage('overview_section', event)">Overview</a></li>
+                {% endif %}
+
+                <li><a href="#" onclick="showPage('contact_section', event)">Contact</a></li>
+
+                <!-- Check if user is logged in to procede booking -->
+                {% if session.get('loggedin') %}
+                <li><a href="{{url_for('booking')}}">Book Now</a></li>
+                {% else %}
+                <li><a href="{{url_for('user_login')}}">Book Now</a></li>
+                {% endif %}
+
+                {% if session.get('loggedin') %}
+                <!-- Profile Dropdown (Visible only when logged in) -->
+                <li class="nav_profile">
+                    <div class="profile_btn" onclick="toggleProfileMenu(event)">
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <ul id="profileDropdown" class="profile_dropdown">
+                        <li class="profile_name">{{ session.get('username') }}</li>
+                        <li><a href="{{url_for('logout')}}">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <!-- Sign In Button (Visible only when NOT logged in) -->
+                <li><a href="{{url_for('user_login')}}">Sign In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</body>
+</html>
