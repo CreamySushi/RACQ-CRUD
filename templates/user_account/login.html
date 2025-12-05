@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loginstyles.css') }}">
+</head>
+<body>
+    <div class="sign-in">
+        <div class="sign-in_content">
+            <h1>Login</h1>
+            <p>Log in to your account using your credentials</p>
+            <form class="sign-in_form" method="POST" action="{{url_for('user_login')}}">
+                <div class="form_layout">
+                    <label for="Email">Email</label>
+                    <input type="text" id="Email" name="email" placeholder="Enter email" required>
+                </div>
+                <div class="form_layout">
+                    <label for="Password">Password</label>
+                    <input type="password" id="Password" name="password_hash" placeholder="Enter password" required="">
+                    <button class="toggle-password" onclick="togglePassword()">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </div>
+                <div class="sign-in_more">
+                    <div>
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Keep me logged in</label>
+                    </div>
+                    <a href="#">Forgot password?</a>
+                </div>
+                <button class="btn primary" type="submit">Sign In</button>
+            </form>
+            <small class="next_page">Don't have an account? <a href="{{ url_for('register_user')}}">Sign Up</a></small>
+        </div>
+        <div class="sign-in_logo">
+            <div>
+                <img src="{{url_for('static', filename='assets/WebsiteLogo.png')}}" alt="Website Logo">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
