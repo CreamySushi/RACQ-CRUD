@@ -1,0 +1,152 @@
+<!-------------------------------- HEADER -------------------------------->
+<header class="home_header">
+    <div class="container header_container">
+
+        <div class="header_left">
+            <h1>Lorem ipsum</h1>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt atque quis ratione vel
+                tempora dolorum tempore, libero pariatur, incidunt ipsum excepturi, hic placeat minus.
+                Corporis aspernatur reprehenderit labore inventore reiciendis?
+            </p>
+            <a href="#" class="btn btn-primary">dawdwada</a>
+        </div>
+    </div>
+</header>
+<!-------------------------------- BOOKING SECTION -------------------------------->
+<section class="booking">
+    <div class="container bookings_container">
+        <form class="booking_form" method="POST" action="{{ url_for('booking') }}">
+            <div class="booking_row">
+                <label for="select_hotel">Our Rooms</label>
+                <select id="select_hotel" name="room_type">
+                    <option value="" selected>Select your Rooms</option>
+                    <option value="single_room">Single Room</option>
+                    <option value="double_room">Double Room</option>
+                    <option value="twin_room">Twin Room</option>
+                    <option value="premium_room">Premium Room</option>
+                    <option value="deluxe_room">Deluxe Room</option>
+                    <option value="executive_room">Executive Room</option>
+                </select>
+            </div>
+            <div class="booking_row">
+                <label for="check_in">Check In</label>
+                <input id="check_in" name="checkin_date" type="date" value="{{ request.args.get('checkin_date', '') }}">
+            </div>
+            <div class="booking_row">
+                <label for="check_out">Check Out</label>
+                <input id="check_out" name="checkout_date" type="date" value="{{ request.args.get('checkout_date', '') }}">
+            </div>
+            <div class="booking_row booking_actions">
+                <br>
+                <button type="submit" class="book_btn">BOOK NOW</a></button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-------------------------------- ABOUT-US SECTION -------------------------------->
+<div class="about_us">
+    <div class="container about_container">
+        <div class="about_left">
+            <h1>About Us</h1>
+            <h2>Welcome to RACQ Hotel</h2>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, repudiandae consequuntur cumque voluptas corrupti nobis quos explicabo numquam aliquid nisi.
+            </p>
+        </div>
+        <div class="about_right">
+            <div class="about_right-image">
+                <img src="{{url_for('static', filename='assets/hotel_building.jpg')}}" alt="Img">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-------------------------------- ROOM SECTION -------------------------------->
+<section class="rooms">
+    <div class="container rooms_container">
+        <div class="rooms_head">
+            <h1>ROOMS</h1>
+        </div>
+
+        <div class="room_types">
+            <article class="room">
+                <span class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></span>
+                <h4>Single Room</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quae molestias ad provident perferendis numquam, tenetur dignissimos necessitatibus dolores consectetur?</p>
+                <a href="#" class="btn">SEE MORE</a>
+            </article>
+
+            <article class="room">
+                <span class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></span>
+                <h4>Double Room</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quae molestias ad provident perferendis numquam, tenetur dignissimos necessitatibus dolores consectetur?</p>
+                <a href="#" class="btn">SEE MORE</a>
+            </article>
+
+            <article class="room">
+                <span class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></span>
+                <h4>Twin Room</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quae molestias ad provident perferendis numquam, tenetur dignissimos necessitatibus dolores consectetur?</p>
+                <a href="#" class="btn">SEE MORE</a>
+            </article>
+
+            <article class="room">
+                <span class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></span>
+                <h4>Deluxe Room</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quae molestias ad provident perferendis numquam, tenetur dignissimos necessitatibus dolores consectetur?</p>
+                <a href="#" class="btn">SEE MORE</a>
+            </article>
+
+            <article class="room">
+                <span class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></span>
+                <h4>Premium Room</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quae molestias ad provident perferendis numquam, tenetur dignissimos necessitatibus dolores consectetur?</p>
+                <a href="#" class="btn">SEE MORE</a>
+            </article>
+
+            <article class="room">
+                <span class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></span>
+                <h4>Executive Room</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quae molestias ad provident perferendis numquam, tenetur dignissimos necessitatibus dolores consectetur?</p>
+                <a href="" class="btn">BOOK NOW</a>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-------------------------------- CONTACT SECTION -------------------------------->
+<section class="contact_us">
+    <div class="container contact_container">
+        <div class="contact_left">
+            <h1>Send Us Message</h1>
+            <form>
+                <input type="text" placeholder="Name*" required>
+                <input type="email" placeholder="Email*" required>
+                <input type="tel" placeholder="Phone*" required>
+                <textarea placeholder="Message" rows="6"></textarea>
+                <button type="submit" class="btn">SUBMIT</button>
+            </form>
+        </div>
+        <div class="contact_right">
+            <h1>Connect With Us</h1>
+            <ul>
+                <li>
+                    <i class="uil uil-location-point"></i>
+                    <span>Binan City, Laguna, Philippines</span>
+                </li>
+                <li>
+                    <i class="uil uil-envelope"></i>
+                    <span>RACQ@gmail.com</span>
+                </li>
+                <li>
+                    <i class="uil uil-phone"></i>
+                    <span>+63 9871538234</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
