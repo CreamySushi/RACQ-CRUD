@@ -27,7 +27,7 @@
 
                 <li><a href="#" onclick="showPage('contact_section', event)">Contact</a></li>
 
-                <!-- Check if user is logged in to procede booking -->
+
                 {% if session.get('loggedin') %}
                 <li><a href="{{url_for('booking')}}">Book Now</a></li>
                 {% else %}
@@ -35,7 +35,7 @@
                 {% endif %}
 
                 {% if session.get('loggedin') %}
-                <!-- Profile Dropdown (Visible only when logged in) -->
+
                 <li class="nav_profile">
                     <div class="profile_btn" onclick="toggleProfileMenu(event)">
                         <i class="uil uil-user"></i>
@@ -46,11 +46,66 @@
                     </ul>
                 </li>
                 {% else %}
-                <!-- Sign In Button (Visible only when NOT logged in) -->
+
                 <li><a href="{{url_for('user_login')}}">Sign In</a></li>
                 {% endif %}
             </ul>
         </div>
     </nav>
+
+    <!-------------------------------- MAIN SECTION -------------------------------->
+    <main id="main_section">
+        <div id="home_section" class="page-content">
+            {% include 'dashpage/home.html' %}
+        </div>
+
+        <div id="about_section" class="page-content" style="display: none;">
+            {% include 'dashpage/about.html' %}
+        </div>
+        <div id="overview_section" class="page-content" style="display: none;">
+            {% include 'dashpage/overview.html' %}
+        </div>
+
+        <div id="rooms_section" class="page-content" style="display: none;">
+            {% include 'dashpage/rooms.html' %}
+        </div>
+        <div id="gallery_section" class="page-content" style="display: none;">
+            {% include 'dashpage/gallery.html' %}
+        </div>
+        <div id="contact_section" class="page-content" style="display: none; padding-top: 6rem;"><div class="container"><h1>Contact Page (Coming Soon)</h1></div></div>
+
+    </main>
+
+
+
+    <!-------------------------------- FOOTER -------------------------------->
+    <footer id="footer">
+        <div class="container footer_container">
+            <div class="footernav_left">
+                <h1>NAVIGATION</h1>
+                <ul>
+                    <li><a href="#" class="active" onclick="showPage('home_section', event)">Home</a></li>
+                    <li><a href="#" onclick="showPage('about_section', event)">About Us</a></li>
+                    <li><a href="#" onclick="showPage('rooms_section', event)">Rooms & Suites</a></li>
+                    <li><a href="#" onclick="showPage('gallery_section', event)">Gallery</a></li>
+                </ul>
+            </div>
+
+            <div class="footercontact_right">
+                <h1>RACQ HOTEL</h1>
+                <ul>
+                    <li>
+                        <span>Binan City, Laguna, Philippines</span>
+                    </li>
+                    <li>
+                        <span>RACQ@gmail.com</span>
+                    </li>
+                    <li>
+                        <span>+63 9871538234</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
