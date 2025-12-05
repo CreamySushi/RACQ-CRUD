@@ -81,6 +81,7 @@ def logout():
     session.clear()
     return redirect(url_for("dashboard"))
 
+# ------------------------------------- Booking -------------------------------------
 @app.route("/user/booking", methods=["GET", "POST"])
 def booking():
     if "loggedin" not in session or session["role"] != 'customer':
@@ -123,6 +124,7 @@ def booking():
             conn.commit()
 
             msg = "Booked Successfully"
+            return render_template ("dashboard.html")
 
         if action == "update":
             bid = request.form["id"]
