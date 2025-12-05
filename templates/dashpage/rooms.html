@@ -1,0 +1,104 @@
+<header class="rooms_header">
+    <div class="container header_container">
+        <div class="header_left">
+            <h1>Our Rooms & Suites</h1>
+            <p>Experience comfort and luxury in our carefully designed rooms.</p>
+        </div>
+    </div>
+</header>
+
+<!-------------------------------- BOOKING SECTION -------------------------------->
+<section class="booking">
+    <div class="container bookings_container">
+        <form class="booking_form" method="POST" action="{{ url_for('booking') }}">
+            <div class="booking_row">
+                <label for="select_hotel">Our Rooms</label>
+                <select id="select_hotel" name="room_type" required>
+                    <option value="" selected>Select your Rooms</option>
+                    <option value="single_room">Single Room</option>
+                    <option value="double_room">Double Room</option>
+                    <option value="twin_room">Twin Room</option>
+                    <option value="premium_room">Premium Room</option>
+                    <option value="deluxe_room">Deluxe Room</option>
+                    <option value="executive_room">Executive Room</option>
+                </select>
+            </div>
+            <div class="booking_row">
+                <label for="check_in">Check In</label>
+                <input id="check_in" name="checkin_date" type="date" value="{{ request.args.get('checkin_date', '') }}" required>
+            </div>
+            <div class="booking_row">
+                <label for="check_out">Check Out</label>
+                <input id="check_out" name="checkout_date" type="date" value="{{ request.args.get('checkout_date', '') }}" required>
+            </div>
+            <div class="booking_row booking_actions">
+                <br>
+                <button type="submit" class="book_btn">BOOK NOW</a></button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-------------------------------- ROOM CATEGORIES -------------------------------->
+<!--  -->
+<div class="room_category_section">
+    <div class="container">
+        <h2 class="category_title">Our Rooms</h2>
+        
+        <div class="room_scroll_container">
+            <article class="room_card">
+                <div class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></div>
+                <div class="room_info">
+                    <h4>Single Room</h4>
+                    <p>Perfect for solo travelers.</p>
+                    <a href="{{ url_for('booking', room_number='101', room_type='single_room') }}" class="btn">BOOK NOW</a>
+                </div>
+            </article>
+
+            <article class="room_card">
+                <div class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></div>
+                <div class="room_info">
+                    <h4>Double Room</h4>
+                    <p>Cozy for two.</p>
+                    <a href="{{ url_for('booking', room_type='double_room') }}" class="btn">BOOK NOW</a>
+                </div>
+            </article>
+
+            <article class="room_card">
+                <div class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></div>
+                <div class="room_info">
+                    <h4>Twin Room</h4>
+                    <p>Cozy for two.</p>
+                    <a href="{{ url_for('booking', room_type='twin_room') }}" class="btn">BOOK NOW</a>
+                </div>
+            </article>
+
+            <article class="room_card">
+                <div class="room_image"><img src="{{url_for('static', filename='assets/single-bed.jpg')}}" alt="Img"></div>
+                <div class="room_info">
+                    <h4>Premium Room</h4>
+                    <p>Cozy for two.</p>
+                    <a href="{{ url_for('booking', room_type='Premium_room') }}" class="btn">BOOK NOW</a>
+                </div>
+            </article>
+
+            <article class="room_card">
+                <div class="room_image"><img src="{{url_for('static', filename='assets/Deluxe.png')}}" alt="Img"></div>
+                <div class="room_info">
+                    <h4>Deluxe Room</h4>
+                    <p>Cozy for two.</p>
+                    <a href="{{ url_for('booking', room_type='deluxe_room') }}" class="btn">BOOK NOW</a>
+                </div>
+            </article>
+            <article class="room_card">
+                <div class="room_image"><img src="{{url_for('static', filename='assets/Executive.png')}}" alt="Img"></div>
+                <div class="room_info">
+                    <h4>Executive Room</h4>
+                    <p>Cozy for two.</p>
+                    <a href="{{ url_for('booking', room_type='executive_room') }}" class="btn">BOOK NOW</a>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+
