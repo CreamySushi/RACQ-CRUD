@@ -16,7 +16,7 @@ function showPage(pageId, event) {
     // Show Content
     const pages = document.querySelectorAll('.page-content');
     pages.forEach(page => {
-        page.style.display = 'none';
+        page.style.display = 'none';    
     });
 
     const activePage = document.getElementById(pageId);

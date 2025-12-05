@@ -164,7 +164,7 @@
                         {% else %}
 
                        
-                        <input type="text" value="{{ session.get('surname', '') }} {{ session.get('firstname', '') }}" readonly>
+                        <input type="text" name="registered_name" value="{{ session.get('surname', '') }} {{ session.get('firstname', '') }}" readonly>
                         <small>This booking will be registered under this name.</small>
                         {% endif %}
 
