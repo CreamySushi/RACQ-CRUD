@@ -1,0 +1,220 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    text-decoration: none;
+    font-family: 'Oswald';
+    list-style: none;
+    --radius: 12px;
+}
+
+:root {
+    --color1: #0D0F10;
+    --color2: #1F3A40;
+    --color3: #3F6A6E;
+    --color4: #5F8F92;
+    --color5: #DDD0BA;
+    --color6: #B88652;
+    --color7: #9C6B38;
+    --color8: #6B4628;
+    --color9: #CF8C55;
+    --color10: #141A1C;
+    --color11: #FFFFFF;
+    --transition: all 400ms ease;
+    --container-width-lg: 76%;
+    --container-width-md: 90%;
+    --container-width-sm: 94%;
+}
+
+
+body {
+    line-height: 1.7;
+    color: var(--color1);
+    background: var(--color11);
+    padding-top: 5rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.container {
+    width: var(--container-width-lg);
+    margin: 0 auto;
+}
+
+
+section h2 {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+h1, h2, h3, h4, h5 {
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2.4rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.6rem;
+}
+
+h4 {
+    font-size: 1.3rem;
+}
+
+a {
+    color: var(--color11);
+    display: block;
+    object-fit: cover;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--color7);
+    color: var(--color1);
+    padding: .5rem 2rem;
+    border: 1px solid transparent;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background: var(--color3);
+    color: var(--color11);
+    border-color: var(--color11);
+}
+
+.btn-primary {
+    background: var(--color11);
+}
+/* ---------------------- NAVBAR ---------------------- */
+nav {
+    background: var(--color2);
+    width: 100vw;
+    height: 5rem;
+    position: fixed;
+    top: 0;
+    z-index: 11;
+}
+
+.nav_container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav button {
+    display: none;
+}
+
+.nav_logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav_logo img {
+    width: 3.5rem;
+    height: auto;
+    object-fit: contain;
+}
+
+.nav_menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav_menu a {
+    font-size: 0.9rem;
+    transition: var(--transition);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+}
+
+.nav_menu a:hover {
+    color: var(--color7);
+}
+
+.nav_menu a.active {
+    background: var(--color7); 
+    color: var(--color11); 
+}
+/* ---------------------- NAVBAR - PROFILE ---------------------- */
+.nav_profile {
+    position: relative;
+}
+
+.profile_btn {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    background: var(--color7); 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.profile_btn:hover {
+    background: var(--color8);
+    border-color: var(--color5);
+}
+
+.profile_dropdown {
+    position: absolute;
+    top: 140%;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 2rem 4rem rgba(0,0,0,0.15);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: none; 
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 14rem;
+    z-index: 100;
+}
+
+.profile_dropdown.show {
+    display: flex;
+}
+
+.profile_dropdown li a {
+    color: var(--color1);
+    display: block;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    text-align: left;
+}
+
+.profile_dropdown li a:hover {
+    background: var(--color5);
+    color: var(--color1);
+}
+
+.profile_name {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    color: var(--color4);
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+}
