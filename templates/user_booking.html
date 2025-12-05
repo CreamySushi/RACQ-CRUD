@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Booking</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/dashboardstyles.css')}}">
+</head>
+<body>
+
+    <nav>
+        <div class="container nav_container">
+            <div class="nav_logo">
+                <a href="{{url_for('dashboard')}}"><h4>RACQ HOTEL</h4></a>
+            </div>
+            <ul class="nav_menu">
+                <li><a href="{{url_for('dashboard')}}">Back to Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 6rem;">
+        <div class="wizard_container">
+
+            <div class="progress_bar">
+                <div class="progress_step active" id="p_step1">1</div>
+                <div class="progress_step" id="p_step2">2</div>
+                <div class="progress_step" id="p_step3">3</div>
+                <div class="progress_step" id="p_step4">4</div>
+            </div>
+
+            <form id="bookingForm" method="POST" action="{{ url_for('booking') }}">
+                <input type="hidden" name="_action" value="add">
+                <p style="color: red; text-align: center;">{{ msg }}</p>
+
+                <!-- STEP 1 -->
+                <div class="form_step active" id="step1">
+                    <h2 class="step_header">Step 1: Select Dates</h2>
+                    <div class="form_group">
+                        <label>Check-in Date</label>
+                        <input type="date" id="checkin" name="checkin_date" value="{{ request.args.get('checkin_date', '') }}" required>
+                    </div>
+                    <div class="form_group">
+                        <label>Check-out Date</label>
+                        <input type="date" id="checkout" name="checkout_date" value="{{ request.args.get('checkout_date', '') }}" required>
+                    </div>
+                    <div class="wizard_btns" style="justify-content: flex-end;">
+                        <button type="button" class="btn btn_next" onclick="nextStep(2)">Next <i class="uil uil-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class="form_step" id="step2">
+                    <h2 class="step_header">Step 2: Room Details</h2>
+
+                    <div class="form_group">
+                        <label>Room Type</label>
+                        <select id="room_type_select" onchange="filterRooms()">
+                            <option value="">-- Select Type --</option>
+                            <option value="single_room" {% if request.args.get('room_type')= ='single_room' %}selected{% endif %}>Single Room</option>
+                            <option value="double_room" {% if request.args.get('room_type')= ='double_room' %}selected{% endif %}>Double Room</option>
+                            <option value="twin_room" {% if request.args.get('room_type')= ='twin_room' %}selected{% endif %}>Twin Room</option>
+                            <option value="premium_room" {% if request.args.get('room_type')= ='premium_room' %}selected{% endif %}>Premium Room</option>
+                            <option value="deluxe_room" {% if request.args.get('room_type')= ='deluxe_room' %}selected{% endif %}>Deluxe Room</option>
+                            <option value="executive_room" {% if request.args.get('room_type')= ='executive_room' %}selected{% endif %}>Executive Room</option>
+                        </select>
+                    </div>
+
+                    <div class="form_group">
+                        <label>Select Room Number</label>
+                        <select id="room_id_select" name="room_id" required onchange="updateRoomDetails()">
+                            <option value="">-- Select Room --</option>
+                            {% for r in rooms %}
+                            
+                            <option value="{{ r[0] }}" data-type="{{ r[2] }}" data-price="{{ r[3] }}"
+                                    {% if request.args.get('room_number')= =r[1] %}selected{% endif %}>
+                                Room {{ r[1] }} ({{ r[2] }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                        <div class="form_group">
+                            <label>Adults</label>
+                            <input type="number" min="1" value="1">
+                        </div>
+                        <div class="form_group">
+                            <label>Children</label>
+                            <input type="number" min="0" value="0">
+                        </div>
+                        <div class="form_group">
+                            <label>Infants</label>
+                            <input type="number" min="0" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form_group" style="background: #f9f9f9; padding: 1rem; border-radius: 0.5rem;">
+                        <h4>Room Description</h4>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enjoy a luxurious stay with premium amenities.
+                        </p>
+                    </div>
+
+                    <div class="wizard_btns">
+                        <button type="button" class="btn btn_prev" onclick="nextStep(1)">Back</button>
+                        <button type="button" class="btn btn_next" onclick="nextStep(3)">Next <i class="uil uil-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="form_step" id="step3">
+                    <h2 class="step_header">Step 3: Confirmation</h2>
+
+                    <div style="background: #fff; border: 1px solid #ddd; padding: 1.5rem; border-radius: 0.5rem;">
+                        <div class="receipt_row">
+                            <span>Check-in:</span>
+                            <span id="summary_checkin">-</span>
+                        </div>
+                        <div class="receipt_row">
+                            <span>Check-out:</span>
+                            <span id="summary_checkout">-</span>
+                        </div>
+                        <div class="receipt_row">
+                            <span>Duration:</span>
+                            <span id="summary_days">0 Nights</span>
+                        </div>
+                        <div class="receipt_row">
+                            <span>Room:</span>
+                            <span id="summary_room">-</span>
+                        </div>
+                        <div class="receipt_row">
+                            <span>Price per Night:</span>
+                            <span id="summary_price">-</span>
+                        </div>
+
+                        <div class="receipt_row receipt_total">
+                            <span>TOTAL AMOUNT:</span>
+                            <span id="summary_total">$0.00</span>
+                        </div>
+                        
+                        <input type="hidden" name="total_amount" id="input_total_amount">
+                    </div>
+
+                    <div class="wizard_btns">
+                        <button type="button" class="btn btn_prev" onclick="nextStep(2)">Back</button>
+                        <button type="button" class="btn btn_next" onclick="nextStep(4)">Next <i class="uil uil-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="form_step" id="step4">
+                    <h2 class="step_header">Step 4: Payment</h2>
+
+                    <div class="form_group">
+                        <label>Full Name (Registered)</label>
+                        
+                        <!--Admin only condition-->
+                        {% if session.get('role') == 'admin' %}
+                       
+                        <input type="text" name="registered_name" placeholder="Enter Guest Name" required>
+                        <small>Enter the name of the guest for this booking.</small>
+                        {% else %}
+
+                       
+                        <input type="text" value="{{ session.get('surname', '') }} {{ session.get('firstname', '') }}" readonly>
+                        <small>This booking will be registered under this name.</small>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="form_group">
+                        <label>Payment Method</label>
+                        <select>
+                            <option>Credit Card</option>
+                            <option>PayPal</option>
+                            <option>Cash on Arrival</option>
+                        </select>
+                    </div>
+
+                    <div class="wizard_btns">
+                        <button type="button" class="btn btn_prev" onclick="nextStep(3)">Back</button>
+                        <button type="submit" class="btn" style="background: green; color: white;">PAY & BOOK NOW</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='javascript/booking.js')}}"></script>
+</body>
+</html>
