@@ -283,5 +283,35 @@ def update_booking_statuses():
     cur.close()
     conn.close()
 
+# ------------------------------------- CUSTOMER MANAGEMENT -------------------------------------
+@app.route("/edit_customer/<int:id>", methods=["GET", "POST"])
+def edit_customer(id):
+    if "loggedin" not in session or session.get("role") != "admin":
+        return redirect(url_for("user_login"))
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    if request.method == "POST":
+        surname = request.form["surname"]
+        firstname = request.form["firstname"]
+        phone = request.form["phone"]
+        email = request.form["email"]
+
+        cur.execute("UPDATE users SET surname=%s, firstname=%s, phone=%s, email=%s WHERE user_id=%s", 
+                    (surname, firstname, phone, email, id))
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return redirect(url_for('dashboard')+ '#overview_section') 
+
+    cur.execute("SELECT * FROM users WHERE user_id=%s", (id,))
+    customer = cur.fetchone()
+    cur.close()
+    conn.close()
+    
+    return render_template("edit_customer.html", customer=customer)
+
 if __name__ == "__main__":
     app.run(debug=True)
