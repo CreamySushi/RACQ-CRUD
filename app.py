@@ -8,7 +8,95 @@ app.secret_key = "your_secret_key"
 
 @app.route("/")
 def dashboard():
-    return render_template("dashboard.html", session=session)
+    available_count = 0
+    customer_count = 0
+    checkin_count = 0
+    occupied_count = 0
+    users = []
+    bookings = []
+    rooms = []
+    booking_history = []
+    customer_bookings = []
+
+    if "loggedin" in session:
+            update_booking_statuses()
+            conn = get_db_connection()
+            cur = conn.cursor()
+            if "loggedin" in session and session.get("role") == "admin":
+                
+                
+                
+                conn = get_db_connection()
+                cur = conn.cursor()
+
+                
+                cur.execute("SELECT COUNT(*) FROM rooms WHERE status='available'")
+                available_count = cur.fetchone()[0]
+
+                cur.execute("SELECT COUNT(*) FROM users WHERE role='customer'")
+                customer_count = cur.fetchone()[0]
+                
+                today = datetime.now().strftime('%Y-%m-%d')
+                cur.execute("SELECT COUNT(*) FROM bookings WHERE checkin_date=%s", (today,))
+                checkin_count = cur.fetchone()[0]
+
+                cur.execute("SELECT COUNT(*) FROM rooms WHERE status='occupied'")
+                occupied_count = cur.fetchone()[0]
+
+                
+                cur.execute("SELECT * FROM checkout_history")
+                booking_history = cur.fetchall()
+
+                cur.execute("SELECT * FROM users WHERE role='customer'")
+                users = cur.fetchall()
+
+                cur.execute("SELECT * FROM bookings ")
+                bookings = cur.fetchall()
+
+                cur.execute("SELECT * FROM rooms")
+                rooms = cur.fetchall()
+
+            elif session.get("role") == "customer":
+                # Fetch logged in user's ID
+                cur.execute("SELECT user_id FROM users WHERE username=%s", (session["username"],))
+                user_row = cur.fetchone()
+
+                if user_row:
+                    user_id = user_row[0]
+                    # Fetch both Active Bookings and History for this customer
+                    # Columns: 0:Type, 1:Number, 2:Amount, 3:Checkin, 4:Checkout, 5:Status
+                    query = """
+                        SELECT r.room_type, r.room_number, b.total_amount, b.checkin_date, b.checkout_date, b.status
+                        FROM bookings b
+                        JOIN rooms r ON b.room_id = r.room_id
+                        WHERE b.customer_id = %s
+                        UNION ALL
+                        SELECT r.room_type, r.room_number, h.total_amount, h.checkin_date, h.checkout_date, h.status
+                        FROM checkout_history h
+                        JOIN rooms r ON h.room_id = r.room_id
+                        WHERE h.customer_id = %s
+                        ORDER BY checkin_date DESC
+                    """
+                    cur.execute(query, (user_id, user_id))
+                    customer_bookings = cur.fetchall()
+
+
+            cur.close()
+            conn.close()
+
+    
+    return render_template("dashboard.html", 
+                           session=session,
+                           available_count=available_count,
+                           customer_count=customer_count,
+                           checkin_count=checkin_count,
+                           occupied_count=occupied_count,
+                           users=users,
+                           bookings=bookings,
+                           rooms=rooms,
+                           booking_history=booking_history,
+                           customer_bookings=customer_bookings
+                           )
 
 # ------------------------------------- Login -------------------------------------
 @app.route("/login", methods=["GET", "POST"])
