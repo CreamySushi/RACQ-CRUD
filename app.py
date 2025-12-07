@@ -313,5 +313,96 @@ def edit_customer(id):
     
     return render_template("edit_customer.html", customer=customer)
 
+@app.route("/delete_customer/<int:id>")
+def delete_customer(id):
+    if "loggedin" not in session or session.get("role") != "admin":
+        return redirect(url_for("user_login"))
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        cur.execute("DELETE FROM users WHERE user_id=%s", (id,))
+        conn.commit()
+    except Exception as e:
+        print(f"Error deleting user: {e}")
+        
+    cur.close()
+    conn.close()
+    
+    return redirect(url_for("dashboard")+ '#overview_section')
+
+# -------------------------------- BOOKING & HISTORY MANAGEMENT --------------------------------
+
+@app.route("/delete_booking/<int:id>")
+def delete_booking(id):
+    """Deletes an active booking and frees the room."""
+    if "loggedin" not in session or session.get("role") != "admin":
+        return redirect(url_for("user_login"))
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    cur.execute("SELECT room_id FROM bookings WHERE id=%s", (id,))
+    row = cur.fetchone()
+    
+    if row:
+        room_id = row[0]
+        cur.execute("DELETE FROM bookings WHERE id=%s", (id,))
+        cur.execute("UPDATE rooms SET status='available' WHERE room_id=%s", (room_id,))
+        conn.commit()
+        
+    cur.close()
+    conn.close()
+    
+    return redirect(url_for('dashboard')+ '#overview_section')
+
+@app.route("/delete_history/<int:id>")
+def delete_history(id):
+    """Deletes a record from history permanently."""
+    if "loggedin" not in session or session.get("role") != "admin":
+        return redirect(url_for("user_login"))
+        
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM checkout_history WHERE id=%s", (id,))
+    conn.commit()
+    cur.close()
+    conn.close()
+    
+    return redirect(url_for('dashboard')+ '#overview_section')
+
+@app.route("/edit_booking/<int:id>", methods=["GET", "POST"])
+def edit_booking(id):
+    """Edits an active booking's details."""
+    if "loggedin" not in session or session.get("role") != "admin":
+        return redirect(url_for("user_login"))
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    if request.method == "POST":
+        reg_name = request.form["registered_name"]
+        checkin = request.form["checkin_date"]
+        checkout = request.form["checkout_date"]
+        total = request.form["total_amount"]
+        
+        cur.execute("""UPDATE bookings 
+                       SET registered_name=%s, checkin_date=%s, checkout_date=%s, total_amount=%s 
+                       WHERE id=%s""", 
+                       (reg_name, checkin, checkout, total, id))
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return redirect(url_for('dashboard') + '#overview_section')
+
+    cur.execute("SELECT * FROM bookings WHERE id=%s", (id,))
+    booking = cur.fetchone()
+    cur.close()
+    conn.close()
+    
+    return render_template("edit_booking.html", booking=booking)
+
 if __name__ == "__main__":
     app.run(debug=True)
