@@ -1,4 +1,4 @@
-// Function to switch pages
+// 1. Function to switch pages
 function showPage(pageId, event) {
     if (event) event.preventDefault();
 
@@ -16,7 +16,7 @@ function showPage(pageId, event) {
     // Show Content
     const pages = document.querySelectorAll('.page-content');
     pages.forEach(page => {
-        page.style.display = 'none';    
+        page.style.display = 'none';
     });
 
     const activePage = document.getElementById(pageId);
@@ -24,19 +24,19 @@ function showPage(pageId, event) {
         activePage.style.display = 'block';
     }
 
-    if (event) window.scrollTo({ top: 0, behavior: 'smooth' });
+    if(event) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Profile Dropdown Toggle
+// 2. Profile Dropdown Toggle
 function toggleProfileMenu(event) {
-    if (event && event.stopPropagation) event.stopPropagation();
+    if (event && event.stopPropagation) event.stopPropagation(); // Prevent click from bubbling to window
     const menu = document.getElementById('profileDropdown');
     if (menu) {
         menu.classList.toggle('show');
     }
 }
 
-// Close dropdown when clicking anywhere else
+// 3. Close dropdown when clicking anywhere else
 window.addEventListener('click', function (e) {
     const menu = document.getElementById('profileDropdown');
     if (menu && menu.classList.contains('show')) {
@@ -46,18 +46,21 @@ window.addEventListener('click', function (e) {
     }
 });
 
-// Date Picker Logic 
+// 4. Date Picker Logic (Wrapped in DOMContentLoaded to be safe)
 document.addEventListener('DOMContentLoaded', function () {
     const inEl = document.getElementById('check_in');
     const outEl = document.getElementById('check_out');
 
     const hash = window.location.hash.substring(1);
     if (hash && document.getElementById(hash)) {
+        // If hash exists and matches an ID, show that page
         showPage(hash, null);
     } else {
+        // Default to Home if no hash
         showPage('home_section', null);
     }
 
+    // Only run if elements exist
     if (inEl && outEl) {
         const today = new Date();
         const isoToday = today.toISOString().split('T')[0];
@@ -85,3 +88,59 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// ----------------------- FILTER BUTTON -------------------
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const header = this.parentElement;
+            let input = header.querySelector('.dynamic-search');
+
+            // If input exists, we are in "Close" mode
+            if (input) {
+                input.remove();
+                this.textContent = 'Filter';
+                this.classList.remove('active');
+                
+                // Reset table rows to show everything
+                const tableWrapper = header.nextElementSibling; 
+                const rows = tableWrapper.querySelectorAll('tbody tr');
+                rows.forEach(row => row.style.display = '');
+            } 
+            
+            else {
+                input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Type Status, Type, or Name...';
+                input.className = 'dynamic-search'; 
+                
+                
+                header.insertBefore(input, this);
+                
+                this.textContent = 'Close';
+                this.classList.add('active');
+                input.focus();
+
+                // Add the typing listener
+                input.addEventListener('keyup', function() {
+                    const filterValue = this.value.toLowerCase();
+                    const tableWrapper = header.nextElementSibling;
+                    const rows = tableWrapper.querySelectorAll('tbody tr');
+
+                    rows.forEach(row => {
+                        // Get all text in the row
+                        const rowText = row.textContent.toLowerCase();
+                        
+                        // If row contains the filter text, show it, else hide it
+                        if (rowText.includes(filterValue)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    });
+});
