@@ -1,0 +1,189 @@
+
+  <div class="container overview_container">
+    <div class="room_availability">
+      <label>Room Available</label>
+      <h2>{{ available_count }}</h2>
+    </div>
+    <div class="customers_count">
+      <label>Customers</label>
+      <h2>{{ customer_count }}</h2>
+    </div>
+    <div class="checkin_count">
+      <label>Check-In</label>
+      <h2>{{ checkin_count }}</h2>
+    </div>
+    <div class="occupied_room">
+      <label>Occupied Room</label>
+      <h2>{{ occupied_count }}</h2>
+    </div>
+  </div>
+
+  <div class="container table_container">
+    <div class="view_customer">
+      <div class="table_header">
+        <h1>Registered Customers</h1>
+        
+        <button class="filter-btn">Filter</button>
+      </div>
+      
+      <div class="table_wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+              <tr>
+                <td>{{ user[1] }} {{ user[2] }}</td>
+                <td>{{ user[3] }}</td>
+                <td>{{ user[6] }}</td>
+                <td>{{ user[4] }}</td>
+                <td class="action_btns">
+                  <a href="{{ url_for('edit_customer', id=user[0]) }}" class="btn_edit"><i class="uil uil-edit"></i></a>
+                  <a href="{{ url_for('delete_customer', id=user[0]) }}" class="btn_delete" onclick="return confirm('Delete this user?');"><i class="uil uil-trash-alt"></i></a>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="5" style="text-align: center;">No users found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container table_container">
+    <div class="room_available">
+      <div class="table_header">
+        <h1>Room Info</h1>
+        
+        <button class="filter-btn">Filter</button>
+      </div>
+      
+      <div class="table_wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Room ID</th>
+              <th>Room Number</th>
+              <th>Room Type</th>
+              <th>Floor Number</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for room in rooms %}
+              <tr>
+                <td>{{ room[0] }}</td>
+                <td>{{ room[1] }}</td>
+                <td>{{ room[2] }}</td>
+                <td>{{ room[3] }}</td>
+                <td>{{ room[4] }}</td>
+                <td>{{ room[5] }}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" style="text-align: center;">No rooms found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="container table_container">
+    <div class="booking_table">
+      <div class="table_header">
+        <h1>Booking</h1>
+        
+        <button class="filter-btn">Filter</button>
+      </div>
+      
+      <div class="table_wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Room ID</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for book in bookings %}
+              <tr>
+                <td>{{ book[1]}}</td>
+                <td>{{ book[3] }}</td>
+                <td>{{ book[4] }}</td>
+                <td>{{ book[5] }}</td>
+                <td>{{ book[7] }}</td>
+                <td class="action_btns">
+                   <a href="{{ url_for('edit_booking', id=book[0]) }}" class="btn_edit"><i class="uil uil-edit"></i></a>
+                   <a href="{{ url_for('delete_booking', id=book[0]) }}" class="btn_delete" onclick="return confirm('Delete this active booking? Room will be set to Available.');"><i class="uil uil-trash-alt"></i></a>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" style="text-align: center;">No active bookings.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="container table_container">
+    <div class="checkout_history">
+      <div class="table_header">
+        <h1>History</h1>
+        
+        <button class="filter-btn">Filter</button>
+      </div>
+      
+      <div class="table_wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Room ID</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for hist in booking_history %}
+              <tr>
+                <td>{{ hist[1]}}</td>
+                <td>{{ hist[3] }}</td>
+                <td>{{ hist[4] }}</td>
+                <td>{{ hist[5] }}</td>
+                <td><span class="status-expired">{{ hist[7] }}</span></td>
+                <td class="action_btns">
+                   <a href="{{ url_for('delete_history', id=hist[0]) }}" class="btn_delete" onclick="return confirm('Permanently delete this history record?');"><i class="uil uil-trash-alt"></i></a>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" style="text-align: center;">No history found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
