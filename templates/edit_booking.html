@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Booking</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/dashboardstyles.css')}}">
+</head>
+<body>
+  <div class="edit-container">
+      <h2 style="margin-bottom: 2rem; color: #4f46e5; text-align: center;">Edit Booking</h2>
+      
+      <form method="POST">
+          <div class="form-group">
+              <label>Registered Name</label>
+              <!-- booking[1] corresponds to registered_name -->
+              <input type="text" name="registered_name" value="{{ booking[1] }}" required>
+          </div>
+
+          <div class="form-group">
+              <label>Check-in Date</label>
+              <!-- booking[4] corresponds to checkin_date -->
+              <input type="date" name="checkin_date" value="{{ booking[4] }}" required>
+          </div>
+
+          <div class="form-group">
+              <label>Check-out Date</label>
+              <!-- booking[5] corresponds to checkout_date -->
+              <input type="date" name="checkout_date" value="{{ booking[5] }}" required>
+          </div>
+
+          <div class="form-group">
+              <label>Total Amount</label>
+              <!-- booking[6] corresponds to total_amount -->
+              <input type="number" step="0.01" name="total_amount" value="{{ booking[6] }}" required>
+          </div>
+
+          <button type="submit" class="btn-submit">Update Booking</button>
+          <a href="{{ url_for('dashboard') }}" class="btn-cancel">Cancel</a>
+      </form>
+  </div>
+
+</body>
+</html>
