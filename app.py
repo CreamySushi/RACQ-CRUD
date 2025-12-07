@@ -170,7 +170,7 @@ def logout():
     return redirect(url_for("dashboard"))
 
 # ------------------------------------- Booking -------------------------------------
-@app.route("/user/booking", methods=["GET", "POST"])
+@app.route("/booking", methods=["GET", "POST"])
 def booking():
     if "loggedin" not in session or session["role"] != 'customer':
         return redirect(url_for("user_login"))
@@ -197,43 +197,23 @@ def booking():
             checkout = request.form["checkout_date"]
             total = request.form["total_amount"]
 
-            
+            cur.execute("""SELECT id FROM bookings 
+                           WHERE customer_id=%s AND room_id=%s AND checkin_date=%s""", 
+                           (user_id, room_id, checkin))
+            existing_booking = cur.fetchone()
+
+            if existing_booking:
+                conn.close()
+                return redirect(url_for('dashboard'))
+
             cur.execute("INSERT INTO bookings (customer_id, room_id, checkin_date, checkout_date, total_amount, registered_name) VALUES (%s,%s,%s,%s,%s, %s)",
                         (user_id, room_id, checkin, checkout, total, reg_name))
             conn.commit()
 
-           
-            cur.execute("SELECT LAST_INSERT_ID()")
-            bid = cur.fetchone()[0]
-            session[f"user_booktime_{bid}"] = datetime.now().timestamp()
-
-           
             cur.execute("UPDATE rooms SET status='Occupied' WHERE room_id=%s", (room_id,))
             conn.commit()
-
-            msg = "Booked Successfully"
-            return render_template ("dashboard.html")
-
-        if action == "update":
-            bid = request.form["id"]
             
-            saved = session.get(f"user_booktime_{bid}")
-            if saved:
-                old = datetime.fromtimestamp(saved)
-                if datetime.now() - old > timedelta(minutes=3):
-                    msg = "Edit expired"
-                else:
-                    reg_name = request.form['registered_name']
-                    room_id = request.form["room_id"]
-                    checkin = request.form["checkin_date"]
-                    checkout = request.form["checkout_date"]
-                    total = request.form["total_amount"]
-
-                    
-                    cur.execute("UPDATE bookings SET room_id=%s, checkin_date=%s, checkout_date=%s, total_amount=%s WHERE id=%s AND customer_id=%s" ,
-                                (room_id, checkin, checkout, total, bid, user_id, reg_name))
-                    conn.commit()
-                    msg = "Updated"
+            return redirect(url_for('dashboard'))
 
     cur.execute("SELECT room_id, room_number, room_type, amount FROM rooms WHERE status='available'")
     rooms = cur.fetchall()
@@ -243,17 +223,11 @@ def booking():
                    WHERE b.customer_id=%s""", (user_id,))
     bookings = cur.fetchall()
 
-    selected_type = request.args.get('room_type')
-    if selected_type:
-        cur.execute("SELECT room_id, room_number, room_type, amount FROM rooms WHERE status='available' AND room_type=%s", (selected_type,))
-    else:
-            cur.execute("SELECT room_id, room_number, room_type, amount FROM rooms WHERE status='available'")
-    rooms = cur.fetchall()
-
     cur.close()
     conn.close()
-
+    
     return render_template("user_booking.html", rooms=rooms, bookings=bookings, msg=msg)
+            
 
 if __name__ == "__main__":
     app.run(debug=True)
