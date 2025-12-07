@@ -1,0 +1,48 @@
+<div class="container table_container">
+    <div class="MyBooking_customer">
+      <div class="table_header">
+        <h1>My Bookings</h1>
+        <button class="filter-btn">Filter</button>
+      </div>
+
+      <div class="table_wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Room Type</th>
+              <th>Room No.</th>
+              <th>Amount</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for book in customer_bookings %}
+              <tr>
+                <td>{{ book[0] }}</td> <!-- Room Type -->
+                <td>{{ book[1] }}</td> <!-- Room Number -->
+                <td>${{ book[2] }}</td> <!-- Amount -->
+                <td>{{ book[3] }}</td> <!-- Check-in -->
+                <td>{{ book[4] }}</td> <!-- Check-out -->
+                <td>
+                  <!-- Display Status with simple styling logic -->
+                  {% if book[5] == 'active' %}
+                    <span style="color: green; font-weight: bold;">Active</span>
+                  {% elif book[5] == 'upcoming' %}
+                    <span style="color: orange; font-weight: bold;">Upcoming</span>
+                  {% else %}
+                    <span class="status-expired">Expired</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" style="text-align: center;">No bookings found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+</div> 
