@@ -228,6 +228,60 @@ def booking():
     
     return render_template("user_booking.html", rooms=rooms, bookings=bookings, msg=msg)
             
+# ----------------------------------- UPDATE STATUS ---------------------------------
+def update_booking_statuses():
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # 0. ENSURE TABLE EXISTS
+    cur.execute("""CREATE TABLE IF NOT EXISTS checkout_history (
+                    id int AUTO_INCREMENT PRIMARY KEY,
+                    registered_name varchar(100),
+                    customer_id int,
+                    room_id int,
+                    checkin_date date,
+                    checkout_date date,
+                    total_amount decimal(10,2),
+                    status varchar(20) DEFAULT 'expired'
+                )""")
+    
+    
+    try:
+        cur.execute("SELECT registered_name FROM checkout_history LIMIT 1")
+    except:
+        
+        cur.execute("ALTER TABLE checkout_history ADD COLUMN registered_name varchar(100) AFTER id")
+        conn.commit()
+
+    
+    cur.execute("UPDATE bookings SET status='upcoming' WHERE checkin_date > %s", (today,))
+    cur.execute("UPDATE bookings SET status='active' WHERE checkin_date <= %s AND checkout_date > %s", (today, today))
+    cur.execute("UPDATE bookings SET status='expired' WHERE checkout_date <= %s", (today,))
+    
+    
+    move_query = """
+        INSERT INTO checkout_history (registered_name, customer_id, room_id, checkin_date, checkout_date, total_amount, status)
+        SELECT registered_name, customer_id, room_id, checkin_date, checkout_date, total_amount, 'expired'
+        FROM bookings
+        WHERE status = 'expired'
+    """
+    cur.execute(move_query)
+
+    
+    cur.execute("""
+        UPDATE rooms r
+        JOIN bookings b ON r.room_id = b.room_id
+        SET r.status = 'available'
+        WHERE b.status = 'expired'
+    """)
+
+    cur.execute("DELETE FROM bookings WHERE status = 'expired'")
+    
+    conn.commit()
+    cur.close()
+    conn.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
