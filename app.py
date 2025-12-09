@@ -227,6 +227,31 @@ def booking():
     conn.close()
     
     return render_template("user_booking.html", rooms=rooms, bookings=bookings, msg=msg)
+
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    msg = ""
+    if request.method == "POST":
+        email = request.form.get("email","").strip()
+        newpassword = request.form.get("password","")
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM users WHERE email=%s", (email,))
+        exist = cur.fetchone()
+
+        if exist:
+            cur.execute("UPDATE users SET password_hash=%s WHERE email=%s", (newpassword, email))
+            conn.commit()
+            cur.close()
+            conn.close()
+            return redirect(url_for("user_login"))
+        else:
+            msg = "Unknown Email"
+            cur.close()
+            conn.close()
+    return render_template("user_account/forgot_pass.html", msg=msg)
             
 # ----------------------------------- UPDATE STATUS ---------------------------------
 def update_booking_statuses():
