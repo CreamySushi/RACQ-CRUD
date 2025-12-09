@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loginstyles.css') }}">
+</head>
+<body>
+    <div class="sign-in">
+    <div class="sign-in_content">
+      <h1>Forgot Password</h1>
+      <p>Input your account credentials to reset password</p>
+        <form class="sign-in_form" method="POST" action="{{url_for('forgot_password')}}">
+        <div class="form_layout">
+          <label for="Email">Email Address</label>
+          <input type="email" id="Email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form_layout">
+          <label for="New_Password">New Password</label>
+          <input type="password" id="New_Password" name="password" placeholder="Enter new password" required>
+        </div>
+        <button class="btn primary" type="submit">Reset Password</button>
+        <a href="{{url_for('user_login')}}" class="btn primary" type="submit">Back Password</a>
+        </form>
+    </div>
+    <div class="sign-in_logo">
+      <div>
+        <img src="{{url_for('static', filename='assets/WebsiteLogo.png')}}" alt="Website Logo">
+      </div>
+    </div>
+    </div>
+</body>
+</html>
