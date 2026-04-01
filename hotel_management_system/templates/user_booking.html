@@ -56,6 +56,19 @@
                     <h2 class="step_header">Step 2: Room Details</h2>
                     
                     <div class="form_group">
+                        <label>Room Type (Filter)</label>
+                        <select id="room_type_select" onchange="filterRooms()">
+                            <option value="">-- All Types --</option>
+                            <option value="single_room" {% if request.args.get('room_type') == 'single_room' %}selected{% endif %}>Single Room</option>
+                            <option value="double_room" {% if request.args.get('room_type') == 'double_room' %}selected{% endif %}>Double Room</option>
+                            <option value="twin_room" {% if request.args.get('room_type') == 'twin_room' %}selected{% endif %}>Twin Room</option>
+                            <option value="premium_room" {% if request.args.get('room_type') == 'premium_room' %}selected{% endif %}>Premium Room</option>
+                            <option value="deluxe_room" {% if request.args.get('room_type') == 'deluxe_room' %}selected{% endif %}>Deluxe Room</option>
+                            <option value="executive_room" {% if request.args.get('room_type') == 'executive_room' %}selected{% endif %}>Executive Room</option>
+                        </select>
+                    </div>
+
+                    <div class="form_group">
                         <label>Select Room Number</label>
                         <select id="room_id_select" name="room_id" required onchange="updateRoomDetails()">
                             <option value="">-- Select Room --</option>
@@ -63,22 +76,9 @@
                             <!-- r: 0=id, 1=number, 2=type, 3=amount -->
                             <option value="{{ r[0] }}" data-type="{{ r[2] }}" data-price="{{ r[3] }}"
                                 {% if request.args.get('room_number') == r[1] %}selected{% endif %}>
-                                Room {{ r[1] }} 
+                                Room {{ r[1] }} ({{ r[2]|replace('_', ' ')|title }})
                             </option>
                             {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="form_group">
-                        <label>Room Type</label>
-                        <select id="room_type_select" disabled>
-                            <option value="">-- Autodetected Type --</option>
-                            <option value="single_room" {% if request.args.get('room_type') == 'single_room' %}selected{% endif %}>Single Room</option>
-                            <option value="double_room" {% if request.args.get('room_type') == 'double_room' %}selected{% endif %}>Double Room</option>
-                            <option value="twin_room" {% if request.args.get('room_type') == 'twin_room' %}selected{% endif %}>Twin Room</option>
-                            <option value="premium_room" {% if request.args.get('room_type') == 'premium_room' %}selected{% endif %}>Premium Room</option>
-                            <option value="deluxe_room" {% if request.args.get('room_type') == 'deluxe_room' %}selected{% endif %}>Deluxe Room</option>
-                            <option value="executive_room" {% if request.args.get('room_type') == 'executive_room' %}selected{% endif %}>Executive Room</option>
                         </select>
                     </div>
 

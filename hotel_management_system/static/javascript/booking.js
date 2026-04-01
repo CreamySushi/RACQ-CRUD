@@ -188,11 +188,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const inVal = document.getElementById('checkin').value;
     const outVal = document.getElementById('checkout').value;
 
-    // If dates exist in URL and inputs are filled
-    if (hasCheckin && hasCheckout && inVal && outVal) {
-
-        nextStep(2);
-    }
+    // Optional: We removed the auto-skip so users can review the dates in step 1.
+    // if (hasCheckin && hasCheckout && inVal && outVal) {
+    //    nextStep(2);
+    // }
     // 3. Set initial Check-out Minimum
         if (Check_In.value) {
             // If URL pre-filled the date, base min checkout on that
