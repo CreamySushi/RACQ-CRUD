@@ -179,7 +179,7 @@ def dashboard():
 
 @app.route("/login", methods=["GET", "POST"])
 def user_login():
-    error = None
+    error = request.args.get("msg")  # Allows grabbing ?msg= from URL
 
     if request.method == "POST":
         email    = request.form.get("email", "").strip()
@@ -240,7 +240,7 @@ def register_user():
                     (surname, firstname, username, email, phone, hashed)
                 )
                 conn.commit()
-                return redirect(url_for("user_login"))
+                return redirect(url_for("user_login", msg="Account created successfully! Please log in."))
         except Exception:
             app.logger.exception("Registration failed")
             error = "Registration failed due to a server configuration issue."

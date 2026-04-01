@@ -11,6 +11,13 @@
     <div class="sign-in_content">
       <h1>Sign Up</h1>
       <p>Fill the form below to create your account</p>
+
+      {% if msg %}
+      <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #f5c6cb;">
+        {{ msg }}
+      </div>
+      {% endif %}
+
       <form class="sign-in_form" method="POST" action="{{ url_for('register_user') }}">
         <div class="form_layout">
           <label for="Surname">Lastname</label>

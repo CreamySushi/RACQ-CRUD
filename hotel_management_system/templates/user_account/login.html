@@ -11,6 +11,13 @@
     <div class="sign-in_content">
       <h1>Login</h1>
       <p>Log in to your account using your credentials</p>
+
+      {% if msg %}
+      <div style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #c3e6cb;">
+        {{ msg }}
+      </div>
+      {% endif %}
+
       <form class="sign-in_form" method="POST" action="{{url_for('user_login')}}">
         <div class="form_layout">
           <label for="Email">Email</label>
