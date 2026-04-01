@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@font-face {
+    font-family: 'Ailerons';
+    src: local('Ailerons'), local('Ailerons-Regular');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   VARIABLES & RESET
+   ========================================================================== */
+
+:root {
+    --brand-primary:   #1B2A4A;
+    --brand-secondary: #C9A84C;
+    --brand-tertiary:  #2E4A7A;
+    --brand-cream:     #FDFAF4;
+    --text-strong:     #111827;
+    --text-muted:      #4B5563;
+
+    --font-primary: 'Ailerons', 'Poppins', 'Segoe UI', Arial, sans-serif;
+    --text-step--1: 0.8rem;
+    --text-step-0: 1rem;
+    --text-step-1: 1.25rem;
+    --text-step-2: 1.563rem;
+    --text-step-3: 1.953rem;
+
+    --space-unit: 8px;
+    --space-1: calc(var(--space-unit) * 1);
+    --space-2: calc(var(--space-unit) * 2);
+    --space-3: calc(var(--space-unit) * 3);
+    --space-4: calc(var(--space-unit) * 4);
+
+    --light-peach: var(--brand-cream);
+    --light-blue:  #EDE8D8;
+    --dark-blue:   var(--brand-primary);
+    --peach:       var(--brand-secondary);
+    --brown:       var(--text-strong);
+    --transition:  all 300ms ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    text-decoration: none;
+    font-family: var(--font-primary);
+}
+
+body {
+    display: grid;
+    font-size: var(--text-step-0);
+    align-items: center;
+    justify-items: center;
+    background: linear-gradient(160deg, var(--brand-cream), #EDE8D8);
+    height: 100vh;
+}
+
+img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+h1 { color: var(--text-strong); font-size: var(--text-step-3); margin-bottom: var(--space-1); }
+
+a, a:active, a:visited { color: var(--brand-primary); font-weight: 500; }
+
+/* ==========================================================================
+   BUTTON
+   ========================================================================== */
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.btn.primary { background: var(--brand-secondary); color: var(--brand-primary); }
+.btn:hover   { background: var(--brand-primary);    color: var(--brand-cream); }
+.btn img     { width: 1.2rem; }
+
+/* ==========================================================================
+   SIGN IN / REGISTER CARD
+   ========================================================================== */
+
+.sign-in {
+    background: white;
+    width: 60rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.sign-in_content { padding: 2rem 4rem; }
+
+.sign-in_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.form_layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    cursor: pointer;
+}
+
+input::placeholder { color: var(--light-peach); }
+label              { font-weight: 500; color: black; }
+
+.sign-in_more {
+    display: flex;
+    justify-content: space-around;
+}
+.sign-in_more div {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+button:last-child { margin-top: 1rem; }
+
+.next_page {
+    margin-top: 1rem;
+    text-align: center;
+    display: block;
+}
+
+.sign-in_logo {
+    display: grid;
+    place-content: center;
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+    height: 100%;
+}
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media screen and (max-width: 600px) {
+    body {
+        display: block;
+        background: var(--light-peach);
+    }
+    h1 { font-size: 1.5rem; }
+    .sign-in {
+        grid-template-columns: 1fr;
+        width: 100vw;
+    }
+    .sign-in_content {
+        grid-row: 2/3;
+        padding: 2rem 1.5rem;
+    }
+    .sign-in_form {
+        margin-top: 1.5rem;
+        gap: 1rem;
+    }
+    .sign-in_more {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+    .sign-in_logo { display: none; }
+}
+

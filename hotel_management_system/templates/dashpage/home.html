@@ -1,0 +1,123 @@
+<!-------------------------------- HEADER -------------------------------->
+      <header class="home_header">
+        <div class="container header_container">
+          <div class="header_left">
+            <h1>Welcome to RACQ Hotel</h1>
+            <p>
+              Discover your perfect escape. Experience unmatched luxury, comfort, 
+              and breathtaking views designed to make every moment unforgettable.
+            </p>
+            <a href="#home_about_section" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('home_about_section').scrollIntoView({ behavior: 'smooth', block: 'start' });">Explore RACQ</a>
+          </div>
+          <div class="header_right">
+            <div class="header_right-image">
+              <img src="{{url_for('static', filename='assets/hotel-preview.jpg')}}" alt="Img">
+            </div>
+          </div>
+        </div>
+      </header>
+        <!-------------------------------- BOOKING SECTION -------------------------------->
+      <section class="booking">
+        <div class="container bookings_container">
+          <form class="booking_form" method="POST" action="{{ url_for('booking') }}">
+            <div class="booking_row">
+              <label for="select_hotel">Our Rooms</label>
+              <select id="select_hotel" name="room_type" >
+                <option value="" selected>Select your Rooms</option>
+                <option value="single_room">Single Room</option>
+                <option value="double_room">Double Room</option>
+                <option value="twin_room">Twin Room</option>
+                <option value="premium_room">Premium Room</option>
+                <option value="deluxe_room">Deluxe Room</option>
+                <option value="executive_room">Executive Room</option>
+              </select>
+            </div>
+            <div class="booking_row">
+              <label for="check_in">Check In</label>
+              <input id="check_in" name="checkin_date" type="date" value="{{ request.args.get('checkin_date', '') }}" >
+            </div>
+            <div class="booking_row">
+              <label for="check_out">Check Out</label>
+              <input id="check_out" name="checkout_date" type="date" value="{{ request.args.get('checkout_date', '') }}">
+            </div>
+            <div class="booking_row booking_actions">
+              <br>
+              <button type="submit" class="book_btn">BOOK NOW</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-------------------------------- ABOUT-US SECTION -------------------------------->
+      <div id="home_about_section" class="about_us">
+        <div class="container about_container">
+          <div class="about_left">
+            <h1>About Us</h1>
+            <h2>A Glimpse into RACQ</h2>
+            <p>
+            More than just a place to sleep, RACQ Hotel is a sanctuary of peace in the heart of the city. We blend eco-friendly
+            practices with world-class hospitality to give you an experience that is both luxurious and sustainable.
+            </p>
+            <a href="#" class="btn btn-primary" onclick="showPage('about_section', event)">Read Our Story</a>
+          </div>
+          <div class="about_right">
+            <div class="about_right-image">
+              <img src="{{url_for('static', filename='assets/hotel_building.jpg')}}" alt="Img">
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-------------------------------- ROOM SECTION -------------------------------->
+      <section class="rooms">
+        <div class="container rooms_container">
+          <div class="rooms_left">
+            <div class="rooms_right-image">
+              <img src="{{url_for('static', filename='assets/hotel_building.jpg')}}" alt="Img">
+            </div>
+          </div>
+          <div class="rooms_right">
+            <h1>Rooms & Suites</h1>
+            <h2>Find Your Perfect Space</h2>
+            <p>Whether you are traveling solo, planning a romantic getaway, or vacationing with friends, 
+              our thoughtfully designed rooms offer the ultimate comfort for every type of traveler.</p>
+            <a href="#" class="btn btn-primary" onclick="showPage('rooms_section', event)">View All Rooms & Suites</a>
+          </div>
+        </div>
+      </section>
+
+      <!-------------------------------- CONTACT SECTION -------------------------------->
+      <section class="contact_us">
+        <h1></h1>
+        <div class="container contact_container">
+          <div class="contact_left">
+            <h1>If you have further questions, send us a message</h1>
+            
+            <form>
+              <input type="text" placeholder="Name*" required>
+              <input type="email" placeholder="Email*" required>
+              <input type="tel" placeholder="Phone*" required>
+              <textarea placeholder="Message" rows="6"></textarea>
+              <button type="submit" class="btn">SUBMIT</button>
+            </form>
+          </div>
+          <div class="contact_right">
+            <h1>Connect With Us</h1>
+            <ul>
+              <li>
+                <i class="uil uil-location-point"></i>
+                <span>Binan City, Laguna, Philippines</span>
+              </li>
+              <li>
+                <i class="uil uil-envelope"></i>
+                <span>RACQ@gmail.com</span>
+              </li>
+              <li>
+                <i class="uil uil-phone"></i>
+                <span>+63 9871538234</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>

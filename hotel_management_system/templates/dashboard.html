@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/dashboardstyles.css')}}">
+  <script src="{{url_for('static', filename='javascript/main.js')}}"></script>
+</head>
+<body>
+  <!-------------------------------- NAV -------------------------------->
+  <nav>
+    <div class="container nav_container">
+      <div class="nav_logo">
+        <img src="{{url_for('static', filename='assets/WebsiteLogo.png')}}">
+        <a href="{{url_for('dashboard')}}"><h4>RACQ</h4></a>
+      </div>
+      
+      <ul class="nav_menu">
+        <li><a href="#" class="active" onclick="showPage('home_section', event)">Home</a></li>
+        <li><a href="#" onclick="showPage('about_section', event)">About Us</a></li>
+        <li><a href="#" onclick="showPage('rooms_section', event)">Rooms & Suites</a></li>
+
+        {% if session.get('role') == 'admin' %}
+          <li><a href="#" onclick="showPage('overview_section', event)">Overview</a></li>
+        {% else %}
+          <li><a href="#" onclick="showPage('review_section', event)">Review</a></li>
+        {% endif %}
+
+        {% if session.get('loggedin') %}
+        <li><a href="{{url_for('booking')}}">Book Now</a></li>
+        {% else %}
+        <li><a href="{{url_for('user_login')}}">Book Now</a></li>
+        {% endif %}
+        
+
+        {% if session.get('loggedin') %}
+          <li class="nav_profile">
+            <div class="profile_btn" onclick="toggleProfileMenu(event)">
+              <i class="uil uil-user"></i>
+            </div>
+            <ul id="profileDropdown" class="profile_dropdown">
+              <li class="profile_name">{{ session.get('username') }}</li>
+              <li><a href="{{url_for('logout')}}">Logout</a></li>
+            </ul>
+          </li>
+        {% else %}
+          <li><a href="{{url_for('user_login')}}">Sign In</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main_section">
+    <div id="home_section" class="page-content">
+      {% include 'dashpage/home.html' %}
+    </div>
+
+    <div id="about_section" class="page-content" style="display: none;">
+      {% include 'dashpage/about.html' %}
+    </div>
+    
+    <div id="rooms_section" class="page-content" style="display: none;">
+      {% include 'dashpage/rooms.html' %}
+    </div>
+    <div id="review_section" class="page-content" style="display: none;">
+      {% include 'dashpage/review.html' %}
+    </div>
+    <div id="overview_section" class="page-content" style="display: none;">
+      {% include 'dashpage/overview.html' %}
+    </div>
+
+  </main>
+  
+  
+
+  <!-------------------------------- FOOTER -------------------------------->
+  <footer id="footer">
+    <div class="container footer_container">
+      <div class="footernav_left">
+        <h1>NAVIGATION</h1>
+        <ul>
+          <li><a href="#" class="active" onclick="showPage('home_section', event)">Home</a></li>
+        <li><a href="#" onclick="showPage('about_section', event)">About Us</a></li>
+        <li><a href="#" onclick="showPage('rooms_section', event)">Rooms & Suites</a></li>
+        <li><a href="#" onclick="showPage('gallery_section', event)">Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footercontact_right">
+        <h1>RACQ HOTEL</h1>
+        <ul>
+          <li>
+            <span>Binan City, Laguna, Philippines</span>
+        </li>
+        <li>
+            <span>RACQ@gmail.com</span>
+        </li>
+        <li>
+            <span>+63 9871538234</span>
+        </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+

@@ -1,0 +1,6 @@
+Hotel Management System — Requirements
+
+pip install flask
+pip install mysqlclient
+pip install bcrypt
+pip install python-dotenv
