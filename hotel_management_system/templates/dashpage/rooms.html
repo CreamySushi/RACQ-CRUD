@@ -10,7 +10,7 @@
 <!-------------------------------- BOOKING SECTION -------------------------------->
 <section class="booking">
         <div class="container bookings_container">
-          <form class="booking_form" method="POST" action="{{ url_for('booking') }}">
+            <form class="booking_form" method="GET" action="{{ url_for('booking') }}">
             <div class="booking_row">
               <label for="select_hotel">Our Rooms</label>
               <select id="select_hotel" name="room_type" required>

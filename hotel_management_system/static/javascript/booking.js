@@ -17,6 +17,15 @@ function nextStep(step) {
                 alert("Please select a room.");
                 return;
             }
+            
+            const adults = parseInt(document.getElementById('adults_count').value) || 0;
+            const children = parseInt(document.getElementById('children_count').value) || 0;
+            const infants = parseInt(document.getElementById('infants_count').value) || 0;
+            if ((adults + children + infants) <= 0) {
+                alert("Please add at least 1 guest to proceed.");
+                return;
+            }
+            
             // Calculate totals before showing Step 3
             calculateReceipt();
         }
@@ -69,7 +78,17 @@ function filterRooms() {
 }
 
 function updateRoomDetails() {
-    // Can be used to update the Lorem Ipsum text dynamically if you had descriptions in DB
+    const roomSelect = document.getElementById('room_id_select');
+    const typeSelect = document.getElementById('room_type_select');
+    
+    // If a room is selected, extract its data-type and set the room_type_select to match automatically
+    if(roomSelect.selectedIndex > 0) {
+        const selectedOption = roomSelect.options[roomSelect.selectedIndex];
+        const roomType = selectedOption.getAttribute('data-type');
+        typeSelect.value = roomType;
+    } else {
+        typeSelect.value = "";
+    }
 }
 
 function calculateReceipt() {
@@ -100,8 +119,8 @@ function calculateReceipt() {
 
 // AUTO-SKIP LOGIC (Runs on Load)
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Run Filter initially (in case Room Type is passed in URL)
-    filterRooms();
+    // Auto-select type on load if a room was pre-selected via URL
+    updateRoomDetails();
 
     const Check_In = document.getElementById('checkin');
     const Check_Out = document.getElementById('checkout');
@@ -171,8 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // If dates exist in URL and inputs are filled
     if (hasCheckin && hasCheckout && inVal && outVal) {
-        
-        nextStep(1);
+
+        nextStep(2);
     }
     // 3. Set initial Check-out Minimum
         if (Check_In.value) {

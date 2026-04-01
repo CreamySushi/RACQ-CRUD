@@ -33,7 +33,7 @@
 
             <form id="bookingForm" method="POST" action="{{ url_for('booking') }}">
                 <input type="hidden" name="_action" value="add">
-                <p style="color: red; text-align: center;">{{ msg }}</p>
+                
 
                 <!-- STEP 1: DATES -->
                 <div class="form_step active" id="step1">
@@ -56,9 +56,23 @@
                     <h2 class="step_header">Step 2: Room Details</h2>
                     
                     <div class="form_group">
+                        <label>Select Room Number</label>
+                        <select id="room_id_select" name="room_id" required onchange="updateRoomDetails()">
+                            <option value="">-- Select Room --</option>
+                            {% for r in rooms %}
+                            <!-- r: 0=id, 1=number, 2=type, 3=amount -->
+                            <option value="{{ r[0] }}" data-type="{{ r[2] }}" data-price="{{ r[3] }}"
+                                {% if request.args.get('room_number') == r[1] %}selected{% endif %}>
+                                Room {{ r[1] }} 
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form_group">
                         <label>Room Type</label>
-                        <select id="room_type_select" onchange="filterRooms()">
-                            <option value="">-- Select Type --</option>
+                        <select id="room_type_select" disabled>
+                            <option value="">-- Autodetected Type --</option>
                             <option value="single_room" {% if request.args.get('room_type') == 'single_room' %}selected{% endif %}>Single Room</option>
                             <option value="double_room" {% if request.args.get('room_type') == 'double_room' %}selected{% endif %}>Double Room</option>
                             <option value="twin_room" {% if request.args.get('room_type') == 'twin_room' %}selected{% endif %}>Twin Room</option>
@@ -68,41 +82,26 @@
                         </select>
                     </div>
 
-                    <div class="form_group">
-                        <label>Select Room Number</label>
-                        <select id="room_id_select" name="room_id" required onchange="updateRoomDetails()">
-                            <option value="">-- Select Room --</option>
-                            {% for r in rooms %}
-                            <!-- r: 0=id, 1=number, 2=type, 3=amount -->
-                            <option value="{{ r[0] }}" data-type="{{ r[2] }}" data-price="{{ r[3] }}"
-                                {% if request.args.get('room_number') == r[1] %}selected{% endif %}>
-                                Room {{ r[1] }} ({{ r[2] }})
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                         <div class="form_group">
                             <label>Adults</label>
-                            <input type="number" min="1" value="1">
-                        </div>
-                        <div class="form_group">
-                            <label>Children</label>
-                            <input type="number" min="0" value="0">
-                        </div>
-                        <div class="form_group">
-                            <label>Infants</label>
-                            <input type="number" min="0" value="0">
-                        </div>
-                    </div>
+                              <input type="number" id="adults_count" min="1" value="1" max="1">
+                          </div>
+                          <div class="form_group">
+                              <label>Children</label>
+                              <input type="number" id="children_count" min="0" value="0">
+                          </div>
+                          <div class="form_group">
+                              <label>Infants</label>
+                              <input type="number" id="infants_count" min="0" value="0">
+                          </div>
+                      </div>
 
-                    <div class="form_group" style="background: #f9f9f9; padding: 1rem; border-radius: 0.5rem;">
-                        <h4>Room Description</h4>
-                        <p style="font-size: 0.9rem; color: #666;">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Enjoy a luxurious stay with premium amenities.
-                        </p>
-                    </div>
+                      <div class="form_group" style="background: #f9f9f9; padding: 1rem; border-radius: 0.5rem; display: none;" id="room_description_container">
+                          <h4>Room Description</h4>
+                          <p id="room_description_text" style="font-size: 0.9rem; color: #666;">
+                          </p>
+                      </div>
 
                     <div class="wizard_btns">
                         <button type="button" class="btn btn_prev" onclick="nextStep(1)">Back</button>

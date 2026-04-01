@@ -124,10 +124,10 @@
           <tbody>
             {% for book in bookings %}
               <tr>
-                <td>{{ book[1]}}</td>
+                <td>{{ book[6] }}</td>
+                <td>{{ book[2] }}</td>
                 <td>{{ book[3] }}</td>
                 <td>{{ book[4] }}</td>
-                <td>{{ book[5] }}</td>
                 <td>{{ book[7] }}</td>
                 <td class="action_btns">
                    <a href="{{ url_for('edit_booking', id=book[0]) }}" class="btn_edit"><i class="uil uil-edit"></i></a>
@@ -157,10 +157,11 @@
         <table>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Cust. ID</th>
               <th>Room ID</th>
               <th>Check-In</th>
               <th>Check-Out</th>
+              <th>Amount</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -168,18 +169,19 @@
           <tbody>
             {% for hist in booking_history %}
               <tr>
-                <td>{{ hist[1]}}</td>
+                <td>{{ hist[1] }}</td>
+                <td>{{ hist[2] }}</td>
                 <td>{{ hist[3] }}</td>
                 <td>{{ hist[4] }}</td>
                 <td>{{ hist[5] }}</td>
-                <td><span class="status-expired">{{ hist[7] }}</span></td>
+                <td><span class="status-expired">{{ hist[6] }}</span></td>
                 <td class="action_btns">
                    <a href="{{ url_for('delete_history', id=hist[0]) }}" class="btn_delete" onclick="return confirm('Permanently delete this history record?');"><i class="uil uil-trash-alt"></i></a>
                 </td>
               </tr>
             {% else %}
               <tr>
-                <td colspan="6" style="text-align: center;">No history found.</td>
+                <td colspan="7" style="text-align: center;">No history found.</td>
               </tr>
             {% endfor %}
           </tbody>
