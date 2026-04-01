@@ -21,8 +21,9 @@ function nextStep(step) {
             const adults = parseInt(document.getElementById('adults_count').value) || 0;
             const children = parseInt(document.getElementById('children_count').value) || 0;
             const infants = parseInt(document.getElementById('infants_count').value) || 0;
-            if ((adults + children + infants) <= 0) {
-                alert("Please add at least 1 guest to proceed.");
+            
+            if (adults < 1) {
+                alert("At least 1 adult is required to make a booking.");
                 return;
             }
             
