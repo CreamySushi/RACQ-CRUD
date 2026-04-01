@@ -78,17 +78,59 @@ function filterRooms() {
     }
 }
 
+const roomInfo = {
+    'single_room': {
+        img: 'single-bed.jpg',
+        desc: 'Perfect for solo travelers. A cozy and comfortable room equipped with all the essentials for a relaxing stay.'
+    },
+    'double_room': {
+        img: 'double-bed.jpg',
+        desc: 'Ideal for couples or friends. A spacious room featuring a comfortable double bed and modern amenities.'
+    },
+    'twin_room': {
+        img: 'double-bed.jpg', 
+        desc: 'Great for companions. This room offers two separate single beds for individual comfort.'
+    },
+    'premium_room': {
+        img: 'Deluxe.png', 
+        desc: 'Experience elevated luxury. Premium rooms offer extra space, superior comfort, and exclusive amenities.'
+    },
+    'deluxe_room': {
+        img: 'Deluxe.png',
+        desc: 'A touch of elegance. Our Deluxe rooms provide premium furnishings and beautiful views for an unforgettable stay.'
+    },
+    'executive_room': {
+        img: 'Executive.png',
+        desc: 'Designed for the modern professional. Spacious and sophisticated with working space and top-tier facilities.'
+    }
+};
+
 function updateRoomDetails() {
     const roomSelect = document.getElementById('room_id_select');
     const typeSelect = document.getElementById('room_type_select');
+    const descriptionContainer = document.getElementById('room_description_container');
+    const descriptionText = document.getElementById('room_description_text');
+    const previewImage = document.getElementById('room_preview_image');
     
     // If a room is selected, extract its data-type and set the room_type_select to match automatically
     if(roomSelect.selectedIndex > 0) {
         const selectedOption = roomSelect.options[roomSelect.selectedIndex];
         const roomType = selectedOption.getAttribute('data-type');
         typeSelect.value = roomType;
+
+        if (roomType && roomInfo[roomType]) {
+            descriptionText.innerText = roomInfo[roomType].desc;
+            if (previewImage) {
+                previewImage.src = "/static/assets/" + roomInfo[roomType].img;
+                previewImage.style.display = "block";
+            }
+            if (descriptionContainer) descriptionContainer.style.display = "block";
+        } else {
+            if (descriptionContainer) descriptionContainer.style.display = "none";
+        }
     } else {
         typeSelect.value = "";
+        if (descriptionContainer) descriptionContainer.style.display = "none";
     }
 }
 
