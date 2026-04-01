@@ -223,26 +223,32 @@ def register_user():
         phone     = request.form.get("phone",         "").strip()
         password  = request.form.get("password_hash", "")
 
-        conn = get_db_connection()
-        cur  = conn.cursor()
+        conn = None
+        cur = None
+        try:
+            conn = get_db_connection()
+            cur = conn.cursor()
 
-        cur.execute("SELECT user_id FROM users WHERE email = %s", (email,))
-        if cur.fetchone():
-            error = "An account with that email already exists."
-        else:
-            hashed = hash_password(password)
-            cur.execute(
-                "INSERT INTO users (surname, firstname, username, email, phone, password_hash, role) "
-                "VALUES (%s, %s, %s, %s, %s, %s, 'customer')",
-                (surname, firstname, username, email, phone, hashed)
-            )
-            conn.commit()
-            cur.close()
-            conn.close()
-            return redirect(url_for("user_login"))
-
-        cur.close()
-        conn.close()
+            cur.execute("SELECT user_id FROM users WHERE email = %s", (email,))
+            if cur.fetchone():
+                error = "An account with that email already exists."
+            else:
+                hashed = hash_password(password)
+                cur.execute(
+                    "INSERT INTO users (surname, firstname, username, email, phone, password_hash, role) "
+                    "VALUES (%s, %s, %s, %s, %s, %s, 'customer')",
+                    (surname, firstname, username, email, phone, hashed)
+                )
+                conn.commit()
+                return redirect(url_for("user_login"))
+        except Exception:
+            app.logger.exception("Registration failed")
+            error = "Registration failed due to a server configuration issue."
+        finally:
+            if cur:
+                cur.close()
+            if conn:
+                conn.close()
 
     return render_template("user_account/register.html", msg=error)
 
