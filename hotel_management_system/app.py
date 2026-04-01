@@ -63,20 +63,6 @@ def sync_booking_statuses():
     cur = conn.cursor()
     today = datetime.now().strftime("%Y-%m-%d")
 
-    # Ensure history table exists
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS checkout_history (
-            id               INTEGER PRIMARY KEY AUTOINCREMENT,
-            registered_name  TEXT,
-            customer_id      INT,
-            room_id          INT,
-            checkin_date     TEXT,
-            checkout_date    TEXT,
-            total_amount     REAL,
-            status           TEXT DEFAULT 'expired'
-        )
-    """)
-
     # Refresh statuses
     cur.execute("UPDATE bookings SET status = 'upcoming' WHERE checkin_date  >  %s", (today,))
     cur.execute("UPDATE bookings SET status = 'active'   WHERE checkin_date  <= %s AND checkout_date > %s", (today, today))
