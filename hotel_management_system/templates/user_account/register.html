@@ -21,27 +21,27 @@
       <form class="sign-in_form" method="POST" action="{{ url_for('register_user') }}">
         <div class="form_layout">
           <label for="Surname">Lastname</label>
-          <input type="text" id="Surname" name="surname" placeholder="Enter lastname">
+          <input type="text" id="Surname" name="surname" placeholder="Enter lastname" required>
         </div>
         <div class="form_layout">
           <label for="Firstname">Firstname</label>
-          <input type="text" id="Firstname" name="firstname" placeholder="Enter firstname">
+          <input type="text" id="Firstname" name="firstname" placeholder="Enter firstname" required>
         </div>
         <div class="form_layout">
           <label for="Username">Username</label>
-          <input type="text" id="Username" name="username" placeholder="Enter Username">
+          <input type="text" id="Username" name="username" placeholder="Enter Username" required>
         </div>
         <div class="form_layout">
           <label for="Email">Email</label>
-          <input type="email" id="Email" name="email" placeholder="Enter email">
+          <input type="email" id="Email" name="email" placeholder="Enter email" required>
         </div>
         <div class="form_layout">
           <label for="phonenum">Phone</label>
-          <input type="tel" id="phonenum" name="phone"  placeholder="0000-000-0000" maxlength="11">
+          <input type="tel" id="phonenum" name="phone"  placeholder="0000-000-0000" maxlength="11" required>
         </div>
         <div class="form_layout">
           <label for="Password">Password</label>
-          <input type="password" id="Password" name="password_hash" placeholder="Enter password" >
+          <input type="password" id="Password" name="password_hash" placeholder="Enter password" required>
         </div>
         <button class="btn primary" type="submit">Sign Up</button>
         <!-- <button class="btn">
