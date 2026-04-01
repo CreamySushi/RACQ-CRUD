@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from pathlib import Path
+from urllib.parse import quote, unquote
 
 import psycopg
 from dotenv import load_dotenv
@@ -45,8 +46,74 @@ class SQLiteConnectionCompat:
 def _normalize_database_url(url: str) -> str:
     # Supabase/Neon sometimes provide postgres://; psycopg expects postgresql://.
     if url.startswith("postgres://"):
-        return "postgresql://" + url[len("postgres://") :]
+        url = "postgresql://" + url[len("postgres://") :]
+
+    # Normalize password encoding to handle common copy/paste mistakes.
+    if "://" in url:
+        scheme, rest = url.split("://", 1)
+
+        if "@" in rest:
+            auth, host_part = rest.rsplit("@", 1)
+            if ":" in auth:
+                user, raw_password = auth.split(":", 1)
+                raw_password = raw_password.strip()
+
+                # Some users paste passwords wrapped in [] from examples.
+                if raw_password.startswith("[") and raw_password.endswith("]"):
+                    raw_password = raw_password[1:-1]
+
+                encoded_password = quote(unquote(raw_password), safe="")
+                rest = f"{user}:{encoded_password}@{host_part}"
+                url = f"{scheme}://{rest}"
+
+    # Supabase requires SSL.
+    if "sslmode=" not in url:
+        url = f"{url}{'&' if '?' in url else '?'}sslmode=require"
+
     return url
+
+
+def _migrate_legacy_postgres_schema(cur):
+    # Compatibility with older schema files that used generic column names.
+    cur.execute(
+        """
+        DO $$
+        BEGIN
+            IF EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name = 'users' AND column_name = 'id'
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name = 'users' AND column_name = 'user_id'
+            ) THEN
+                ALTER TABLE users RENAME COLUMN id TO user_id;
+            END IF;
+
+            IF EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name = 'rooms' AND column_name = 'id'
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name = 'rooms' AND column_name = 'room_id'
+            ) THEN
+                ALTER TABLE rooms RENAME COLUMN id TO room_id;
+            END IF;
+
+            IF EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name = 'rooms' AND column_name = 'price'
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name = 'rooms' AND column_name = 'amount'
+            ) THEN
+                ALTER TABLE rooms RENAME COLUMN price TO amount;
+            END IF;
+        END $$;
+        """
+    )
 
 
 def _bootstrap_schema_sqlite(conn: sqlite3.Connection):
@@ -115,6 +182,8 @@ def _bootstrap_schema_sqlite(conn: sqlite3.Connection):
 def _bootstrap_schema_postgres(conn):
     cur = conn.cursor()
 
+    _migrate_legacy_postgres_schema(cur)
+
     cur.execute(
         """
         CREATE TABLE IF NOT EXISTS users (
@@ -173,6 +242,36 @@ def _bootstrap_schema_postgres(conn):
         )
         """
     )
+
+    # Ensure expected columns exist even on partially created tables.
+    cur.execute("ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS surname TEXT")
+    cur.execute("ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS firstname TEXT")
+    cur.execute("ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS username TEXT")
+    cur.execute("ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS email TEXT")
+    cur.execute("ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS phone TEXT")
+    cur.execute("ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS password_hash TEXT")
+    cur.execute("ALTER TABLE IF EXISTS users ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'customer'")
+
+    cur.execute("ALTER TABLE IF EXISTS rooms ADD COLUMN IF NOT EXISTS room_number TEXT")
+    cur.execute("ALTER TABLE IF EXISTS rooms ADD COLUMN IF NOT EXISTS room_type TEXT")
+    cur.execute("ALTER TABLE IF EXISTS rooms ADD COLUMN IF NOT EXISTS amount NUMERIC(10, 2)")
+    cur.execute("ALTER TABLE IF EXISTS rooms ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'available'")
+
+    cur.execute("ALTER TABLE IF EXISTS bookings ADD COLUMN IF NOT EXISTS customer_id INTEGER")
+    cur.execute("ALTER TABLE IF EXISTS bookings ADD COLUMN IF NOT EXISTS room_id INTEGER")
+    cur.execute("ALTER TABLE IF EXISTS bookings ADD COLUMN IF NOT EXISTS checkin_date DATE")
+    cur.execute("ALTER TABLE IF EXISTS bookings ADD COLUMN IF NOT EXISTS checkout_date DATE")
+    cur.execute("ALTER TABLE IF EXISTS bookings ADD COLUMN IF NOT EXISTS total_amount NUMERIC(10, 2)")
+    cur.execute("ALTER TABLE IF EXISTS bookings ADD COLUMN IF NOT EXISTS registered_name TEXT")
+    cur.execute("ALTER TABLE IF EXISTS bookings ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'upcoming'")
+
+    cur.execute("ALTER TABLE IF EXISTS checkout_history ADD COLUMN IF NOT EXISTS registered_name TEXT")
+    cur.execute("ALTER TABLE IF EXISTS checkout_history ADD COLUMN IF NOT EXISTS customer_id INTEGER")
+    cur.execute("ALTER TABLE IF EXISTS checkout_history ADD COLUMN IF NOT EXISTS room_id INTEGER")
+    cur.execute("ALTER TABLE IF EXISTS checkout_history ADD COLUMN IF NOT EXISTS checkin_date DATE")
+    cur.execute("ALTER TABLE IF EXISTS checkout_history ADD COLUMN IF NOT EXISTS checkout_date DATE")
+    cur.execute("ALTER TABLE IF EXISTS checkout_history ADD COLUMN IF NOT EXISTS total_amount NUMERIC(10, 2)")
+    cur.execute("ALTER TABLE IF EXISTS checkout_history ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'expired'")
 
     conn.commit()
     cur.close()
