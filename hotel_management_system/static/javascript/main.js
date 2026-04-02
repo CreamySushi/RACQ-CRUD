@@ -144,3 +144,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Mobile Nav Toggle (Sidebar)
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.querySelector('.nav_toggle');
+    const navMenu = document.querySelector('.nav_menu');
+
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            
+            // Change icon when active
+            const icon = navToggle.querySelector('i');
+            if(navMenu.classList.contains('active')) {
+                icon.className = 'uil uil-multiply'; // Close icon
+            } else {
+                icon.className = 'uil uil-bars'; // Burger icon
+            }
+        });
+    }
+
+    // Hide nav menu on smaller screens when link is clicked or outside is clicked
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024 && navMenu && navMenu.classList.contains('active')) {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                const icon = navToggle.querySelector('i');
+                if(icon) icon.className = 'uil uil-bars';
+            }
+        }
+    });
+
+    const navLinks = document.querySelectorAll('.nav_menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 1024 && navMenu) {
+                navMenu.classList.remove('active');
+                const icon = navToggle.querySelector('i');
+                if(icon) icon.className = 'uil uil-bars';
+            }
+        });
+    });
+});
