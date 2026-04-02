@@ -148,6 +148,48 @@ button:last-child { margin-top: 1rem; }
     display: block;
 }
 
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+    .sign-in {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+    
+    .sign-in_logo {
+        display: none; /* Hide image on tablet/mobile screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+
+    .sign-in {
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .sign-in_content {
+        padding: 2rem 1.5rem;
+    }
+    
+    .sign-in_more {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .form_layout input {
+        width: 100%;
+    }
+}
+
 .sign-in_logo {
     display: grid;
     place-content: center;
