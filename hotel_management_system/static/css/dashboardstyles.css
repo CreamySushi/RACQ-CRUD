@@ -796,7 +796,8 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     .header_container,
     .about_container,
     .rooms_container,
-    .contact_container {
+    .contact_container,
+    .footer_container {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
@@ -812,10 +813,47 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
         row-gap: 1rem;
         column-gap: 1rem;
     }
+
+    .room_types {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media screen and (max-width: 768px) {
     .container { width: var(--container-width-sm); }
+    
+    body {
+        padding-top: 0; /* Remove top padding since nav is relative */
+    }
+
+    /* Navbar fixes for mobile */
+    nav {
+        height: auto;
+        padding: 1rem 0;
+        position: relative; /* Change from fixed to relative */
+    }
+    
+    .nav_container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav_menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .nav_menu a {
+        padding: 0.5rem 1rem;
+    }
+
+    .profile_dropdown {
+        top: 100%;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 
     header {
         height: auto;
@@ -826,10 +864,25 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     .booking_form {
         grid-template-columns: 1fr;
     }
+    
+    .room_types {
+        grid-template-columns: 1fr;
+    }
 
     .contact_left input,
     .contact_left textarea {
         width: 100%;
+    }
+    
+    /* Table mobile fixes */
+    .table_header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    input.dynamic-search {
+        margin-right: 0;
+        margin-bottom: 1rem;
     }
 }
 
