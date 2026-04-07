@@ -118,6 +118,21 @@ a, a:active, a:visited { color: var(--brand-primary); font-weight: 500; }
     gap: 0.5rem;
 }
 
+.form_layout input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid rgba(27, 42, 74, 0.28);
+    border-radius: 0.55rem;
+    background: #fff;
+    color: var(--text-strong);
+    transition: var(--transition);
+}
+
+.form_layout input:focus {
+    border-color: var(--brand-secondary);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.16);
+}
+
 .toggle-password {
     position: absolute;
     top: 50%;
@@ -185,9 +200,6 @@ button:last-child { margin-top: 1rem; }
         gap: 1rem;
     }
 
-    .form_layout input {
-        width: 100%;
-    }
 }
 
 .sign-in_logo {
