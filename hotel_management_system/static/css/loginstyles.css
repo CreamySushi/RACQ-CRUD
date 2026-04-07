@@ -26,6 +26,7 @@
     --text-step-1: 1.25rem;
     --text-step-2: 1.563rem;
     --text-step-3: 1.953rem;
+    --text-step-4: 2.441rem;
 
     --space-unit: 8px;
     --space-1: calc(var(--space-unit) * 1);
@@ -46,7 +47,7 @@
     padding: 0;
     box-sizing: border-box;
     outline: 0;
-    border: 1;
+    border: 0;
     border-radius: 8px;
     text-decoration: none;
     font-family: var(--font-primary);
@@ -67,7 +68,8 @@ img {
     object-fit: cover;
 }
 
-h1 { color: var(--text-strong); font-size: var(--text-step-3); margin-bottom: var(--space-1); }
+h1, h2, h3, h4, h5 { line-height: 1.2; letter-spacing: 0.02em; }
+h1 { color: var(--text-strong); font-size: var(--text-step-4); margin-bottom: var(--space-1); }
 
 a, a:active, a:visited { color: var(--brand-primary); font-weight: 500; }
 
