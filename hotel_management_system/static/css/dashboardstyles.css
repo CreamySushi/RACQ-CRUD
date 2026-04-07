@@ -1133,6 +1133,29 @@ svg {
         row-gap: 0.9rem;
     }
 
+    .footer_container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .footernav_left,
+    .footercontact_right {
+        padding: 0.5rem;
+    }
+
+    .footernav_left h1,
+    .footercontact_right h1 {
+        font-size: 1.7rem;
+        margin: 0.5rem 0 1rem;
+    }
+
+    .footernav_left ul li a,
+    .footercontact_right ul li span {
+        font-size: 0.9rem;
+        line-height: 1.45;
+    }
+
     .booking_actions {
         grid-column: auto;
     }
@@ -1228,6 +1251,28 @@ svg {
 
     .bookings_container {
         width: min(100%, 33rem);
+    }
+
+    .booking_form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 0.7rem;
+        row-gap: 0.75rem;
+        align-items: end;
+    }
+
+    .booking_form .booking_row:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .booking_form .booking_actions {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
+
+    .booking_form .booking_actions .book_btn {
+        width: min(100%, 12rem);
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
     }
 
     .footer_container {
