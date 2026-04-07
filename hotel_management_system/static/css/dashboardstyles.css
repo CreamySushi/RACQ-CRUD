@@ -839,14 +839,18 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     .container { width: var(--container-width-sm); }
     
     body {
-        padding-top: 0;
+        padding-top: 5rem;
     }
 
     /* Navbar fixes for mobile */
     nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: auto;
         padding: 1rem 0;
-        position: relative; 
+        z-index: 2000;
     }
     
     .nav_container {
@@ -905,13 +909,34 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
         padding: 4rem 0;
     }
 
+    .header_left h1 {
+        font-size: clamp(1.85rem, 7vw, 2.65rem);
+        line-height: 1.15;
+    }
+
+    .header_left p {
+        font-size: clamp(0.95rem, 3.6vw, 1.08rem);
+        margin: 0.85rem 0 1.5rem;
+    }
+
+    .header_left .btn {
+        width: fit-content;
+        padding: 0.75rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
     .booking {
-        padding: var(--space-4) 1rem var(--space-4);
+        padding: 0.9rem 0.65rem 1.05rem;
+    }
+
+    .bookings_container {
+        width: min(100%, 38rem);
+        margin: 0 auto;
     }
     
     .booking_form {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.8rem;
     }
     
     .booking_row label {
@@ -921,8 +946,8 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     .booking_form select,
     .booking_form input[type="date"],
     .booking_form button {
-        padding: 1rem; 
-        font-size: 1rem;
+        padding: 0.82rem 0.95rem;
+        font-size: 0.95rem;
         border-radius: 0.5rem;
     }
     
@@ -1048,7 +1073,7 @@ svg {
     }
 
     body {
-        padding-top: 0;
+        padding-top: 5rem;
         overflow-x: hidden;
     }
 
@@ -1061,9 +1086,25 @@ svg {
     }
 
     header {
-        min-height: 32rem;
+        min-height: 30rem;
         height: auto;
-        padding: 3.5rem 0;
+        padding: 2.9rem 0;
+    }
+
+    .header_left h1 {
+        font-size: clamp(1.8rem, 7.2vw, 2.45rem);
+        line-height: 1.15;
+    }
+
+    .header_left p {
+        font-size: clamp(0.93rem, 3.7vw, 1.02rem);
+        margin: 0.75rem 0 1.25rem;
+    }
+
+    .header_left .btn {
+        width: fit-content;
+        padding: 0.7rem 1.1rem;
+        font-size: 0.92rem;
     }
 
     .header_left p,
@@ -1073,7 +1114,12 @@ svg {
     }
 
     .booking {
-        padding-inline: 0.5rem;
+        padding: 0.85rem 0.5rem 1rem;
+    }
+
+    .bookings_container {
+        width: min(100%, 36rem);
+        margin: 0 auto;
     }
 
     .booking_form {
@@ -1156,6 +1202,28 @@ svg {
         font-size: clamp(1.65rem, 8vw, 2.25rem);
     }
 
+    .header_left h1 {
+        font-size: clamp(1.55rem, 8.6vw, 2.05rem);
+    }
+
+    .header_left p {
+        font-size: 0.92rem;
+        margin-bottom: 1rem;
+    }
+
+    .header_left .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .booking {
+        padding: 0.7rem 0.45rem 0.9rem;
+    }
+
+    .bookings_container {
+        width: min(100%, 33rem);
+    }
+
     .room_card {
         min-width: 88vw;
     }
@@ -1211,8 +1279,30 @@ svg {
 /* Landscape phones and short screens */
 @media screen and (max-height: 500px) and (orientation: landscape) {
     header {
-        min-height: 28rem;
-        padding: 2.2rem 0;
+        min-height: 24rem;
+        padding: 1.8rem 0;
+    }
+
+    .header_left h1 {
+        font-size: clamp(1.45rem, 4.8vw, 2rem);
+    }
+
+    .header_left p {
+        font-size: 0.9rem;
+        margin: 0.6rem 0 1rem;
+    }
+
+    .header_left .btn {
+        padding: 0.62rem 1rem;
+        font-size: 0.86rem;
+    }
+
+    .booking {
+        padding: 0.65rem 0.45rem 0.85rem;
+    }
+
+    .bookings_container {
+        width: min(100%, 32rem);
     }
 
     .nav_menu {
