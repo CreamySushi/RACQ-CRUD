@@ -165,6 +165,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-select type on load if a room was pre-selected via URL
     updateRoomDetails();
 
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter') return;
+
+            const tag = (e.target.tagName || '').toLowerCase();
+            const isTextarea = tag === 'textarea';
+            const isSubmitButton = tag === 'button' && e.target.type === 'submit';
+
+            // Block Enter-to-submit on Steps 1-3 to prevent accidental booking.
+            if (!isTextarea && !isSubmitButton && currentStep < 4) {
+                e.preventDefault();
+            }
+        });
+    }
+
     const Check_In = document.getElementById('checkin');
     const Check_Out = document.getElementById('checkout');
 
