@@ -22,6 +22,11 @@
 
     <div class="container" style="margin-top: 6rem;">
         <div class="wizard_container">
+            {% if msg %}
+            <div style="background:#fde8e8;color:#991b1b;border:1px solid #fecaca;padding:0.75rem 1rem;margin-bottom:1rem;border-radius:0.5rem;">
+                {{ msg }}
+            </div>
+            {% endif %}
             
             <!-- Progress Indicators -->
             <div class="progress_bar">

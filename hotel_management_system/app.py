@@ -297,6 +297,7 @@ def logout():
 def booking():
     conn = get_db_connection()
     cur  = conn.cursor()
+    msg = None
 
     cur.execute("SELECT user_id FROM users WHERE username = %s", (session["username"],))
     row = cur.fetchone()
@@ -308,29 +309,54 @@ def booking():
     user_id = row[0]
 
     if request.method == "POST" and request.form.get("_action") == "add":
-        reg_name  = request.form["registered_name"]
-        room_id   = request.form["room_id"]
-        checkin   = request.form["checkin_date"]
-        checkout  = request.form["checkout_date"]
-        total     = request.form["total_amount"]
+        reg_name = request.form.get("registered_name", "").strip()
+        room_id_raw = request.form.get("room_id", "").strip()
+        checkin_raw = request.form.get("checkin_date", "").strip()
+        checkout_raw = request.form.get("checkout_date", "").strip()
 
-        
-        cur.execute(
-            "SELECT id FROM bookings WHERE customer_id = %s AND room_id = %s AND checkin_date = %s",
-            (user_id, room_id, checkin)
-        )
-        if not cur.fetchone():
+        if not (reg_name and room_id_raw and checkin_raw and checkout_raw):
+            msg = "Please complete all required booking fields."
+        else:
+            try:
+                room_id = int(room_id_raw)
+                checkin = datetime.strptime(checkin_raw, "%Y-%m-%d").date()
+                checkout = datetime.strptime(checkout_raw, "%Y-%m-%d").date()
+            except ValueError:
+                msg = "Invalid booking details. Please recheck room and dates."
+
+        if not msg and checkout <= checkin:
+            msg = "Checkout date must be after check-in date."
+
+        if not msg:
+            # Never trust client-calculated totals; compute on server from room rate.
             cur.execute(
-                "INSERT INTO bookings (customer_id, room_id, checkin_date, checkout_date, total_amount, registered_name) "
-                "VALUES (%s, %s, %s, %s, %s, %s)",
-                (user_id, room_id, checkin, checkout, total, reg_name)
+                "SELECT amount FROM rooms WHERE room_id = %s AND status = 'available'",
+                (room_id,)
             )
-            cur.execute("UPDATE rooms SET status = 'occupied' WHERE room_id = %s", (room_id,))
-            conn.commit()
+            room = cur.fetchone()
+            if not room:
+                msg = "Selected room is no longer available. Please choose another room."
+            else:
+                nights = (checkout - checkin).days
+                total = round(float(room[0]) * nights, 2)
 
-        cur.close()
-        conn.close()
-        return redirect(url_for("dashboard"))
+                cur.execute(
+                    "SELECT id FROM bookings WHERE customer_id = %s AND room_id = %s AND checkin_date = %s",
+                    (user_id, room_id, checkin)
+                )
+                if cur.fetchone():
+                    msg = "You already have a booking for this room and check-in date."
+                else:
+                    cur.execute(
+                        "INSERT INTO bookings (customer_id, room_id, checkin_date, checkout_date, total_amount, registered_name) "
+                        "VALUES (%s, %s, %s, %s, %s, %s)",
+                        (user_id, room_id, checkin, checkout, total, reg_name)
+                    )
+                    cur.execute("UPDATE rooms SET status = 'occupied' WHERE room_id = %s", (room_id,))
+                    conn.commit()
+                    cur.close()
+                    conn.close()
+                    return redirect(url_for("dashboard"))
 
     cur.execute(
         "SELECT room_id, room_number, room_type, amount FROM rooms WHERE status = 'available'"
@@ -348,7 +374,7 @@ def booking():
     cur.close()
     conn.close()
 
-    return render_template("user_booking.html", rooms=rooms, bookings=bookings, msg=None)
+    return render_template("user_booking.html", rooms=rooms, bookings=bookings, msg=msg)
 
 
 
