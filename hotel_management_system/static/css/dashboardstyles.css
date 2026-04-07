@@ -890,10 +890,16 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     }
     
     .nav_menu a {
+        color: var(--color2);
         padding: 0.5rem 1rem;
         display: block;
         width: 100%;
         border-radius: 0.25rem;
+    }
+
+    .nav_menu a:hover {
+        color: var(--color1);
+        background: rgba(27, 42, 74, 0.08);
     }
 
     .profile_dropdown {
@@ -1224,6 +1230,29 @@ svg {
         width: min(100%, 33rem);
     }
 
+    .footer_container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .footernav_left,
+    .footercontact_right {
+        padding: 0.5rem;
+    }
+
+    .footernav_left h1,
+    .footercontact_right h1 {
+        font-size: 1.95rem;
+        margin: 0.5rem 0 1rem;
+    }
+
+    .footernav_left ul li a,
+    .footercontact_right ul li span {
+        font-size: 0.9rem;
+        line-height: 1.45;
+    }
+
     .room_card {
         min-width: 88vw;
     }
@@ -1239,9 +1268,7 @@ svg {
     }
 
     .contact_left,
-    .contact_right,
-    .footernav_left,
-    .footercontact_right {
+    .contact_right {
         padding: 1rem 0.25rem;
     }
 }
