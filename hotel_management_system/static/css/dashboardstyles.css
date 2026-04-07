@@ -839,33 +839,33 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     .container { width: var(--container-width-sm); }
     
     body {
-        padding-top: 0; /* Remove top padding since nav is relative */
+        padding-top: 0;
     }
 
     /* Navbar fixes for mobile */
     nav {
         height: auto;
         padding: 1rem 0;
-        position: relative; /* Change from fixed to relative */
+        position: relative; 
     }
     
     .nav_container {
-        flex-direction: row; /* Keep logo and toggle on same row */
+        flex-direction: row;
         justify-content: space-between;
         gap: 1rem;
-        flex-wrap: wrap; /* Ensure menu wraps below if absolute is not used */
+        flex-wrap: wrap; 
     }
 
     .nav_toggle {
-        display: block; /* Show hamburger on mobile */
-        z-index: 1001; /* Ensure it stays above the sidebar */
+        display: block; 
+        z-index: 1001; 
         position: relative;
     }
     
     .nav_menu {
-        position: fixed; /* Make it a sidebar */
+        position: fixed; 
         top: 0;
-        right: -100%; /* Hide off-screen to the right by default */
+        right: -100%; 
         width: 250px;
         height: 100vh;
         background: var(--color5);
@@ -878,11 +878,11 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
         box-shadow: -2px 0 1rem rgba(0,0,0,0.2);
         z-index: 1000;
         transition: right 0.3s ease-in-out;
-        display: flex; /* Override previous inline styles */
+        display: flex; 
     }
 
     .nav_menu.active {
-        right: 0; /* Slide in when active */
+        right: 0; 
     }
     
     .nav_menu a {
@@ -915,13 +915,13 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     }
     
     .booking_row label {
-        font-size: 1rem; /* Slightly larger labels for touch */
+        font-size: 1rem; 
     }
     
     .booking_form select,
     .booking_form input[type="date"],
     .booking_form button {
-        padding: 1rem; /* Larger touch targets */
+        padding: 1rem; 
         font-size: 1rem;
         border-radius: 0.5rem;
     }
@@ -944,6 +944,298 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     input.dynamic-search {
         margin-right: 0;
         margin-bottom: 1rem;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE HARDENING (ALL PLATFORMS)
+   ========================================================================== */
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Large desktop and ultrawide */
+@media screen and (min-width: 1600px) {
+    .container {
+        width: min(72%, 1400px);
+    }
+
+    .header_container,
+    .about_container,
+    .rooms_container,
+    .contact_container,
+    .footer_container {
+        gap: clamp(2rem, 3vw, 4rem);
+    }
+}
+
+/* Laptop and smaller desktop */
+@media screen and (max-width: 1200px) {
+    .container {
+        width: var(--container-width-md);
+    }
+
+    .header_container {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 2.5rem;
+    }
+
+    .room_types {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .room_card {
+        min-width: 280px;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 992px) {
+    body {
+        padding-top: 5.8rem;
+    }
+
+    .page-content section h1:first-of-type,
+    .page-content > h1:first-of-type {
+        font-size: clamp(2rem, 6vw, 2.7rem);
+    }
+
+    .header_container,
+    .about_container,
+    .rooms_container,
+    .contact_container,
+    .footer_container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .header_left,
+    .rooms_right,
+    .about_left,
+    .contact_left,
+    .contact_right {
+        text-align: left;
+    }
+
+    .header_right-image,
+    .about_right-image,
+    .rooms_right-image {
+        margin-inline: auto;
+    }
+
+    .booking_form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .booking_actions {
+        grid-column: span 2;
+    }
+
+    .table_wrapper {
+        max-height: 380px;
+    }
+}
+
+/* Mobile and small tablets */
+@media screen and (max-width: 768px) {
+    :root {
+        --space-unit: 7px;
+    }
+
+    body {
+        padding-top: 0;
+        overflow-x: hidden;
+    }
+
+    nav {
+        width: 100%;
+    }
+
+    .container {
+        width: min(94%, 680px);
+    }
+
+    header {
+        min-height: 32rem;
+        height: auto;
+        padding: 3.5rem 0;
+    }
+
+    .header_left p,
+    .about_left p,
+    .rooms_right p {
+        max-width: 100%;
+    }
+
+    .booking {
+        padding-inline: 0.5rem;
+    }
+
+    .booking_form {
+        grid-template-columns: 1fr;
+        row-gap: 0.9rem;
+    }
+
+    .booking_actions {
+        grid-column: auto;
+    }
+
+    .room_types {
+        grid-template-columns: 1fr;
+    }
+
+    .room_scroll_container {
+        gap: 1rem;
+        padding: 0.75rem 0.35rem 1.25rem;
+        scroll-snap-type: x mandatory;
+    }
+
+    .room_card {
+        min-width: 82vw;
+        scroll-snap-align: start;
+    }
+
+    .table_container {
+        margin-bottom: 2rem;
+    }
+
+    .view_customer,
+    .customer_history,
+    .room_available,
+    .booking_table,
+    .checkout_history {
+        padding: 1rem;
+        border-radius: 0.75rem;
+    }
+
+    table {
+        font-size: 0.86rem;
+    }
+
+    thead th,
+    td {
+        padding: 0.7rem;
+        white-space: nowrap;
+    }
+
+    .wizard_container {
+        margin: 1rem auto;
+        padding: 1.1rem;
+    }
+
+    .wizard_btns {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .wizard_btns .btn {
+        flex: 1 1 9rem;
+        text-align: center;
+    }
+}
+
+/* Phones */
+@media screen and (max-width: 576px) {
+    .nav_menu {
+        width: min(88vw, 300px);
+    }
+
+    .profile_btn {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.2rem;
+    }
+
+    .page-content section h1:first-of-type,
+    .page-content > h1:first-of-type {
+        font-size: clamp(1.65rem, 8vw, 2.25rem);
+    }
+
+    .room_card {
+        min-width: 88vw;
+    }
+
+    .room_card .room_image {
+        height: 190px;
+    }
+
+    .progress_step {
+        width: 2.1rem;
+        height: 2.1rem;
+        font-size: 0.82rem;
+    }
+
+    .contact_left,
+    .contact_right,
+    .footernav_left,
+    .footercontact_right {
+        padding: 1rem 0.25rem;
+    }
+}
+
+/* Very small devices */
+@media screen and (max-width: 400px) {
+    .container {
+        width: 95%;
+    }
+
+    .nav_logo img {
+        width: 2.75rem;
+    }
+
+    .nav_toggle {
+        font-size: 1.7rem;
+    }
+
+    .room_card {
+        min-width: 92vw;
+    }
+
+    .table_wrapper {
+        max-height: 320px;
+    }
+
+    .btn,
+    .table_header button.filter-btn,
+    .contact_left button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Landscape phones and short screens */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    header {
+        min-height: 28rem;
+        padding: 2.2rem 0;
+    }
+
+    .nav_menu {
+        padding-top: 3rem;
+        overflow-y: auto;
+    }
+}
+
+/* Better touch behavior on hybrid/tablet devices */
+@media (hover: none) and (pointer: coarse) {
+    .btn,
+    .table_header button.filter-btn,
+    .profile_btn,
+    .btn_edit,
+    .btn_delete {
+        min-height: 44px;
+    }
+
+    .nav_menu a,
+    .profile_dropdown li a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
     }
 }
 
