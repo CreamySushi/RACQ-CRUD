@@ -150,14 +150,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.querySelector('.nav_toggle');
     const navMenu = document.querySelector('.nav_menu');
 
+    const closeMobileMenu = () => {
+        if (!navMenu || !navToggle) return;
+        navMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        const icon = navToggle.querySelector('i');
+        if (icon) icon.className = 'uil uil-bars';
+    };
+
     if (navToggle && navMenu) {
+        navToggle.setAttribute('aria-expanded', 'false');
         navToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             navMenu.classList.toggle('active');
+            const isOpen = navMenu.classList.contains('active');
+            document.body.classList.toggle('menu-open', isOpen);
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             
             // Change icon when active
             const icon = navToggle.querySelector('i');
-            if(navMenu.classList.contains('active')) {
+            if(isOpen) {
                 icon.className = 'uil uil-multiply'; // Close icon
             } else {
                 icon.className = 'uil uil-bars'; // Burger icon
@@ -169,10 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         if (window.innerWidth <= 1024 && navMenu && navMenu.classList.contains('active')) {
             if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-                const icon = navToggle.querySelector('i');
-                if(icon) icon.className = 'uil uil-bars';
+                closeMobileMenu();
             }
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
+            closeMobileMenu();
         }
     });
 
@@ -180,9 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (window.innerWidth <= 1024 && navMenu) {
-                navMenu.classList.remove('active');
-                const icon = navToggle.querySelector('i');
-                if(icon) icon.className = 'uil uil-bars';
+                closeMobileMenu();
             }
         });
     });

@@ -52,6 +52,7 @@
     --space-8: calc(var(--space-unit) * 8);
 
     --transition: all 400ms ease;
+    --focus-ring: rgba(201, 168, 76, 0.45);
     --container-width-lg: 76%;
     --container-width-md: 90%;
     --container-width-sm: 94%;
@@ -75,6 +76,18 @@ body {
     background: var(--brand-cream);
     padding-top: var(--space-8);
     font-size: var(--text-step-0);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+:where(a, button, input, select, textarea, .btn, .profile_btn, .nav_toggle):focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
 }
 
 #home_section    { background: var(--brand-cream); }
@@ -135,7 +148,7 @@ a {
 
 nav {
     background: var(--color2);
-    width: 100vw;
+    width: 100%;
     height: var(--space-8);
     position: fixed;
     top: 0;
@@ -180,9 +193,11 @@ nav button { display: none; }
     transition: var(--transition);
     padding: var(--space-2) var(--space-4);
     border-radius: 0.5rem;
+    white-space: nowrap;
 }
 .nav_menu a:hover  { color: var(--color9); }
 .nav_menu a.active { background: var(--color7); color: var(--color2); }
+.nav_menu a:focus-visible { color: var(--color2); background: rgba(201, 168, 76, 0.28); }
 
 /* Navbar profile dropdown */
 .nav_profile { position: relative; }
@@ -513,6 +528,9 @@ footer { padding: 4rem 0 2rem; background: var(--color1); }
     display: inline-block;
     width: fit-content;
 }
+.footernav_left ul li a:hover {
+    color: var(--color9);
+}
 
 /* ==========================================================================
    ROOMS PAGE — SCROLLABLE CARDS
@@ -835,10 +853,79 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     }
 }
 
+/* Transition range before burger menu */
+@media screen and (min-width: 769px) and (max-width: 900px) {
+    .container {
+        width: min(96%, 860px);
+    }
+
+    nav {
+        height: auto;
+        min-height: var(--space-8);
+        padding: 0.35rem 0;
+    }
+
+    .nav_logo img {
+        width: 3rem;
+    }
+
+    .nav_menu {
+        gap: 0.35rem;
+    }
+
+    .nav_menu a {
+        font-size: 0.76rem;
+        padding: 0.45rem 0.6rem;
+    }
+
+    .booking {
+        padding: 0.85rem 0.5rem 1rem;
+    }
+
+    .bookings_container {
+        width: min(100%, 36rem);
+        margin: 0 auto;
+    }
+
+    .booking_form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 0.7rem;
+        row-gap: 0.75rem;
+        align-items: end;
+    }
+
+    .booking_form .booking_row:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .booking_form .booking_actions {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
+
+    .booking_form .booking_actions .book_btn {
+        width: min(100%, 12rem);
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .footer_container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .footernav_left,
+    .footercontact_right {
+        padding: 0.5rem;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .container { width: var(--container-width-sm); }
     
     body {
+        font-size: 0.92rem;
         padding-top: 5rem;
     }
 
@@ -885,12 +972,25 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
         display: flex; 
     }
 
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    body.menu-open::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(17, 24, 39, 0.38);
+        z-index: 999;
+    }
+
     .nav_menu.active {
         right: 0; 
     }
     
     .nav_menu a {
         color: var(--color2);
+        font-size: 0.92rem;
         padding: 0.5rem 1rem;
         display: block;
         width: 100%;
@@ -1079,6 +1179,7 @@ svg {
     }
 
     body {
+        font-size: 0.92rem;
         padding-top: 5rem;
         overflow-x: hidden;
     }
@@ -1098,19 +1199,19 @@ svg {
     }
 
     .header_left h1 {
-        font-size: clamp(1.8rem, 7.2vw, 2.45rem);
+        font-size: clamp(1.65rem, 6.7vw, 2.15rem);
         line-height: 1.15;
     }
 
     .header_left p {
-        font-size: clamp(0.93rem, 3.7vw, 1.02rem);
+        font-size: clamp(0.88rem, 3.2vw, 0.97rem);
         margin: 0.75rem 0 1.25rem;
     }
 
     .header_left .btn {
         width: fit-content;
         padding: 0.7rem 1.1rem;
-        font-size: 0.92rem;
+        font-size: 0.88rem;
     }
 
     .header_left p,
@@ -1129,8 +1230,25 @@ svg {
     }
 
     .booking_form {
-        grid-template-columns: 1fr;
-        row-gap: 0.9rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 0.7rem;
+        row-gap: 0.75rem;
+        align-items: end;
+    }
+
+    .booking_form .booking_row:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .booking_form .booking_actions {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
+
+    .booking_form .booking_actions .book_btn {
+        width: min(100%, 12rem);
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
     }
 
     .footer_container {
@@ -1146,7 +1264,7 @@ svg {
 
     .footernav_left h1,
     .footercontact_right h1 {
-        font-size: 1.7rem;
+        font-size: 1.45rem;
         margin: 0.5rem 0 1rem;
     }
 
@@ -1154,10 +1272,6 @@ svg {
     .footercontact_right ul li span {
         font-size: 0.9rem;
         line-height: 1.45;
-    }
-
-    .booking_actions {
-        grid-column: auto;
     }
 
     .room_types {
@@ -1216,6 +1330,10 @@ svg {
 
 /* Phones */
 @media screen and (max-width: 576px) {
+    body {
+        font-size: 0.88rem;
+    }
+
     .nav_menu {
         width: min(88vw, 300px);
     }
@@ -1232,11 +1350,11 @@ svg {
     }
 
     .header_left h1 {
-        font-size: clamp(1.55rem, 8.6vw, 2.05rem);
+        font-size: clamp(1.4rem, 8vw, 1.85rem);
     }
 
     .header_left p {
-        font-size: 0.92rem;
+        font-size: 0.84rem;
         margin-bottom: 1rem;
     }
 
@@ -1253,28 +1371,6 @@ svg {
         width: min(100%, 33rem);
     }
 
-    .booking_form {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        column-gap: 0.7rem;
-        row-gap: 0.75rem;
-        align-items: end;
-    }
-
-    .booking_form .booking_row:first-child {
-        grid-column: 1 / -1;
-    }
-
-    .booking_form .booking_actions {
-        grid-column: 1 / -1;
-        justify-content: center;
-    }
-
-    .booking_form .booking_actions .book_btn {
-        width: min(100%, 12rem);
-        padding: 0.7rem 0.9rem;
-        font-size: 0.9rem;
-    }
-
     .footer_container {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
@@ -1288,13 +1384,13 @@ svg {
 
     .footernav_left h1,
     .footercontact_right h1 {
-        font-size: 1.95rem;
+        font-size: 1.3rem;
         margin: 0.5rem 0 1rem;
     }
 
     .footernav_left ul li a,
     .footercontact_right ul li span {
-        font-size: 0.9rem;
+        font-size: 0.82rem;
         line-height: 1.45;
     }
 
@@ -1398,6 +1494,15 @@ svg {
         min-height: 44px;
         display: flex;
         align-items: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 

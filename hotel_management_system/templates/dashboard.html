@@ -17,11 +17,11 @@
         <a href="{{url_for('dashboard')}}"><h4>RACQ</h4></a>
       </div>
       
-      <button class="nav_toggle" aria-label="Toggle navigation">
+      <button class="nav_toggle" aria-label="Toggle navigation" aria-controls="primaryNav">
         <i class="uil uil-bars"></i>
       </button>
       
-      <ul class="nav_menu">
+      <ul class="nav_menu" id="primaryNav">
         <li><a href="#" class="active" onclick="showPage('home_section', event)">Home</a></li>
         <li><a href="#" onclick="showPage('about_section', event)">About Us</a></li>
         <li><a href="#" onclick="showPage('rooms_section', event)">Rooms & Suites</a></li>

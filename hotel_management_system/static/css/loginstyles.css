@@ -40,6 +40,7 @@
     --peach:       var(--brand-secondary);
     --brown:       var(--text-strong);
     --transition:  all 300ms ease;
+    --focus-ring: rgba(201, 168, 76, 0.45);
 }
 
 * {
@@ -60,6 +61,18 @@ body {
     justify-items: center;
     background: linear-gradient(160deg, var(--brand-cream), #EDE8D8);
     height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+:where(a, button, input, select, textarea, .btn):focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
 }
 
 img {
@@ -144,7 +157,7 @@ a, a:active, a:visited { color: var(--brand-primary); font-weight: 500; }
     cursor: pointer;
 }
 
-input::placeholder { color: var(--light-peach); }
+input::placeholder { color: #9ca3af; }
 label              { font-weight: 500; color: black; }
 
 .sign-in_more {
@@ -155,6 +168,16 @@ label              { font-weight: 500; color: black; }
     display: flex;
     gap: 0.5rem;
     align-items: center;
+}
+
+#remember {
+    width: 1rem;
+    height: 1rem;
+}
+
+.toggle-password {
+    border: 0;
+    padding: 0.1rem;
 }
 
 button:last-child { margin-top: 1rem; }
@@ -182,9 +205,14 @@ button:last-child { margin-top: 1rem; }
 
 @media screen and (max-width: 768px) {
     body {
+        font-size: 0.92rem;
         height: auto;
         min-height: 100vh;
         padding: 2rem 0;
+    }
+
+    h1 {
+        font-size: clamp(1.8rem, 7vw, 2.15rem);
     }
 
     .sign-in {
@@ -193,7 +221,24 @@ button:last-child { margin-top: 1rem; }
     }
 
     .sign-in_content {
-        padding: 2rem 1.5rem;
+        padding: 1.6rem 1.2rem;
+    }
+
+    .sign-in_content p,
+    .form_layout label,
+    .next_page,
+    .sign-in_more {
+        font-size: 0.95rem;
+    }
+
+    .form_layout input {
+        padding: 0.75rem 0.9rem;
+        font-size: 0.92rem;
+    }
+
+    .btn {
+        font-size: 0.95rem;
+        padding: 0.72rem 1rem;
     }
     
     .sign-in_more {
@@ -217,10 +262,11 @@ button:last-child { margin-top: 1rem; }
 
 @media screen and (max-width: 600px) {
     body {
+        font-size: 0.9rem;
         display: block;
         background: var(--light-peach);
     }
-    h1 { font-size: 1.5rem; }
+    h1 { font-size: 1.4rem; }
     .sign-in {
         grid-template-columns: 1fr;
         width: 100vw;
