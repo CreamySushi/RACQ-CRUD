@@ -96,10 +96,6 @@ textarea {
 #review_section  { background: var(--brand-cream); padding-bottom: clamp(2rem, 6vh, 4rem); }
 #overview_section{ background: #F0EEF8; }
 
-#review_section .table_container {
-    min-height: clamp(24rem, 58vh, 40rem);
-}
-
 .page-content {
     width: 100%;
     max-width: 100%;
@@ -385,6 +381,16 @@ header {
 .about_left h1 {line-height: 1; margin-bottom: 1rem; font-family: cursive; color: var(--color6);}
 .about_left h2 { font-size: var(--text-step-4); margin-bottom: 1.5rem; color: var(--color2); }
 .about_left p  { color: var(--color1); margin-bottom: 2rem; line-height: 1.8; }
+.about_left .btn {
+    background: var(--color2);
+    color: var(--color11);
+    border-color: var(--color2);
+}
+.about_left .btn:hover {
+    background: var(--color7);
+    color: var(--color2);
+    border-color: var(--color7);
+}
 
 .about_right { display: flex; justify-content: center; padding: 2rem; }
 .about_right-image { position: relative; z-index: 1; }
@@ -1356,6 +1362,7 @@ svg {
     .booking_form .booking_actions {
         grid-column: 1 / -1;
         justify-content: center;
+        align-items: center;
     }
 
     .booking_form .booking_actions .book_btn {
