@@ -275,7 +275,12 @@ header {
     height: 70vh;
 }
 .home_header  { background: url("/static/assets/home-preview.jpg") center/cover no-repeat; }
-.rooms_header { background: url("/static/assets/rooms-head.jpg")   center/cover no-repeat; }
+.rooms_header {
+    background: #1B2A4A center/cover no-repeat;
+}
+.rooms_header.hero-ready {
+    background-image: url("/static/assets/rooms-head.jpg");
+}
 
 .home_header::before {
     content: "";

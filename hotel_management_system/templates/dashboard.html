@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <link rel="preload" as="image" href="{{url_for('static', filename='assets/home-preview.jpg')}}" fetchpriority="high">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
   <link rel="stylesheet" href="{{url_for('static', filename='css/dashboardstyles.css')}}">
-  <script src="{{url_for('static', filename='javascript/main.js')}}"></script>
+  <script defer src="{{url_for('static', filename='javascript/main.js')}}"></script>
 </head>
 <body>
   <!-------------------------------- NAV -------------------------------->

@@ -1,3 +1,19 @@
+const HERO_IMAGES = {
+    rooms: '/static/assets/rooms-head.jpg'
+};
+
+function preloadImage(src) {
+    if (!src) return;
+    const img = new Image();
+    img.src = src;
+}
+
+function ensureRoomsHeroLoaded() {
+    const roomsHeader = document.querySelector('.rooms_header');
+    if (!roomsHeader || roomsHeader.classList.contains('hero-ready')) return;
+    roomsHeader.classList.add('hero-ready');
+}
+
 // 1. Function to switch pages
 function showPage(pageId, event) {
     if (event) event.preventDefault();
@@ -24,7 +40,16 @@ function showPage(pageId, event) {
         activePage.style.display = 'block';
     }
 
-    if(event) window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (pageId === 'rooms_section') {
+        ensureRoomsHeroLoaded();
+    }
+
+    if (event) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        // On redirects/hash loads, reset browser-restored scroll to avoid blank gaps.
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
 }
 
 // 2. Profile Dropdown Toggle
@@ -48,6 +73,10 @@ window.addEventListener('click', function (e) {
 
 // 4. Date Picker Logic (Wrapped in DOMContentLoaded to be safe)
 document.addEventListener('DOMContentLoaded', function () {
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
     const inEl = document.getElementById('check_in');
     const outEl = document.getElementById('check_out');
 
@@ -58,6 +87,13 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         // Default to Home if no hash
         showPage('home_section', null);
+    }
+
+    const prefetchRoomsHero = () => preloadImage(HERO_IMAGES.rooms);
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(prefetchRoomsHero, { timeout: 2000 });
+    } else {
+        setTimeout(prefetchRoomsHero, 1200);
     }
 
     // Only run if elements exist
