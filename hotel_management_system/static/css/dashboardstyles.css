@@ -278,8 +278,8 @@ header {
     overflow: hidden;
     height: 70vh;
 }
-.home_header  { background: url("/static/assets/hotel-preview.jpg") center/cover no-repeat; }
-.rooms_header { background: url("/static/assets/Shade-Hotel.jpg")   center/cover no-repeat; }
+.home_header  { background: url("/static/assets/home-preview.jpg") center/cover no-repeat; }
+.rooms_header { background: url("/static/assets/rooms-head.jpg")   center/cover no-repeat; }
 
 .home_header::before {
     content: "";
@@ -995,6 +995,7 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     .booking_form .booking_actions {
         grid-column: 1 / -1;
         justify-content: center;
+        align-items: center;
     }
 
     .booking_form .booking_actions .book_btn {
@@ -1153,6 +1154,14 @@ tbody tr:hover { background: var(--color5); cursor: pointer; transition: backgro
     
     .room_types {
         grid-template-columns: 1fr;
+    }
+
+    .rooms_right {
+        order: 1;
+    }
+
+    .rooms_left {
+        order: 2;
     }
 
     .contact_left input,
@@ -1463,7 +1472,7 @@ svg {
     }
 
     .header_left .btn {
-        width: 100%;
+        width: min(100%, 14rem);
         text-align: center;
     }
 
