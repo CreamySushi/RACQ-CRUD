@@ -447,6 +447,11 @@ header {
     align-items: center;
 }
 
+.about_history_grid > div:last-child {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .about_section_title {
     color: var(--color2);
     margin-bottom: 1.5rem;
@@ -457,7 +462,9 @@ header {
 }
 
 .about_history_image {
-    width: 100%;
+    width: min(100%, 24rem);
+    max-height: 32rem;
+    object-fit: cover;
     border-radius: 1rem;
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
     display: block;
@@ -1288,6 +1295,15 @@ svg {
     .about_history_grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .about_history_grid > div:last-child {
+        justify-content: center;
+    }
+
+    .about_history_image {
+        width: min(100%, 20rem);
+        max-height: 26rem;
     }
 
     .about_mission_grid {
