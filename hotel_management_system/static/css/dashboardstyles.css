@@ -93,8 +93,21 @@ textarea {
 #home_section    { background: var(--brand-cream); }
 #about_section   { background: #F4F0E8; }
 #rooms_section   { background: #EDEAF6; }
-#review_section  { background: var(--brand-cream); }
+#review_section  { background: var(--brand-cream); padding-bottom: clamp(2rem, 6vh, 4rem); }
 #overview_section{ background: #F0EEF8; }
+
+#review_section .table_container {
+    min-height: clamp(24rem, 58vh, 40rem);
+}
+
+.page-content {
+    width: 100%;
+    max-width: 100%;
+}
+
+#about_section {
+    overflow-x: hidden;
+}
 
 .hidden    { display: none !important; }
 .container { width: var(--container-width-lg); margin: 0 auto; }
@@ -391,6 +404,87 @@ header {
     height: 100%;
     border: 2px solid var(--color5);
     z-index: -1;
+}
+
+/* ==========================================================================
+   ABOUT PAGE
+   ========================================================================== */
+
+.about_header {
+    height: 50vh;
+    background: var(--color2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color11);
+}
+
+.about_title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+}
+
+.about_history_section {
+    padding: 5rem 0;
+}
+
+.about_history_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about_section_title {
+    color: var(--color2);
+    margin-bottom: 1.5rem;
+}
+
+.about_text_spaced {
+    margin-bottom: 1rem;
+}
+
+.about_history_image {
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
+    display: block;
+}
+
+.about_mission_section {
+    background: var(--color5);
+    padding: 5rem 0;
+}
+
+.about_mission_container {
+    text-align: center;
+}
+
+.about_mission_title {
+    color: var(--color8);
+    margin-bottom: 2rem;
+}
+
+.about_mission_grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.about_mission_card {
+    background: var(--color11);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.about_mission_icon {
+    font-size: 2rem;
+    color: var(--color6);
+}
+
+.about_mission_heading {
+    margin: 1rem 0;
 }
 
 /* ==========================================================================
@@ -1170,6 +1264,16 @@ svg {
     .table_wrapper {
         max-height: 380px;
     }
+
+    .about_history_grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about_mission_grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
 /* Mobile and small tablets */
@@ -1411,6 +1515,17 @@ svg {
     .contact_left,
     .contact_right {
         padding: 1rem 0.25rem;
+    }
+
+    .about_header {
+        min-height: 18rem;
+        height: auto;
+        padding: 2.25rem 0;
+    }
+
+    .about_history_section,
+    .about_mission_section {
+        padding: 3rem 0;
     }
 }
 

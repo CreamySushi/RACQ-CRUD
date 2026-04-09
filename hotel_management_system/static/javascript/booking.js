@@ -80,30 +80,44 @@ function filterRooms() {
 
 const roomInfo = {
     'single_room': {
-        img: 'single-bed.jpg',
+        assetDir: 'Single',
+        images: ['Single.jpg', 'Single1.jpg', 'Single2.jpg', 'Single3.jpg', 'Single4.jpg', 'Single5.jpg', 'Single6.jpg', 'Single7.jpg', 'Single8.jpg'],
         desc: 'Perfect for solo travelers. A cozy and comfortable room equipped with all the essentials for a relaxing stay.'
     },
     'double_room': {
-        img: 'double-bed.jpg',
+        assetDir: 'Double',
+        images: ['Double1.jpg', 'Double2.jpg', 'Double3.jpg', 'Double4.jpg', 'Double5.jpg', 'Double6.jpg', 'Double7.jpg', 'Double8.jpg'],
         desc: 'Ideal for couples or friends. A spacious room featuring a comfortable double bed and modern amenities.'
     },
     'twin_room': {
-        img: 'double-bed.jpg', 
+        assetDir: 'Twin',
+        images: ['Twin.jpg', 'Twin1.jpg', 'Twin2.jpg', 'Twin3.jpg', 'Twin4.jpg', 'Twin5.jpg', 'Twin6.jpg', 'Twin7.jpg', 'Twin8.jpg'],
         desc: 'Great for companions. This room offers two separate single beds for individual comfort.'
     },
     'premium_room': {
-        img: 'Deluxe.png', 
+        assetDir: 'Premium',
+        images: ['Premium.jpg', 'Premium1.jpg', 'Premium2.jpg', 'Premium3.jpg', 'Premium4.jpg', 'Premium5.jpg', 'Premium6.jpg', 'Premium7.jpg', 'Premium8.jpg'],
         desc: 'Experience elevated luxury. Premium rooms offer extra space, superior comfort, and exclusive amenities.'
     },
     'deluxe_room': {
-        img: 'Deluxe.png',
+        assetDir: 'Deluxe',
+        images: ['Deluxe.jpg', 'Deluxe1.jpg', 'Deluxe2.jpg', 'Deluxe3.jpg', 'Deluxe4.jpg', 'Deluxe5.jpg', 'Deluxe6.jpg', 'Deluxe7.png', 'Deluxe8.jpg'],
         desc: 'A touch of elegance. Our Deluxe rooms provide premium furnishings and beautiful views for an unforgettable stay.'
     },
     'executive_room': {
-        img: 'Executive.png',
+        assetDir: 'Executive',
+        images: ['Executive.jpg', 'Executive1.jpg', 'Executive2.jpg', 'Executive3.jpg', 'Executive4.jpg', 'Executive5.jpg', 'Executive6.jpg', 'Executive7.jpg', 'Executive8.jpg'],
         desc: 'Designed for the modern professional. Spacious and sophisticated with working space and top-tier facilities.'
     }
 };
+
+function getRandomRoomImagePath(roomType) {
+    const info = roomInfo[roomType];
+    if (!info || !info.images || info.images.length === 0) return '';
+
+    const randomIndex = Math.floor(Math.random() * info.images.length);
+    return '/static/assets/' + info.assetDir + '/' + info.images[randomIndex];
+}
 
 function updateRoomDetails() {
     const roomSelect = document.getElementById('room_id_select');
@@ -112,7 +126,7 @@ function updateRoomDetails() {
     const descriptionText = document.getElementById('room_description_text');
     const previewImage = document.getElementById('room_preview_image');
     
-    // If a room is selected, extract its data-type and set the room_type_select to match automatically
+    
     if(roomSelect.selectedIndex > 0) {
         const selectedOption = roomSelect.options[roomSelect.selectedIndex];
         const roomType = selectedOption.getAttribute('data-type');
@@ -121,8 +135,13 @@ function updateRoomDetails() {
         if (roomType && roomInfo[roomType]) {
             descriptionText.innerText = roomInfo[roomType].desc;
             if (previewImage) {
-                previewImage.src = "/static/assets/" + roomInfo[roomType].img;
-                previewImage.style.display = "block";
+                const randomImagePath = getRandomRoomImagePath(roomType);
+                if (randomImagePath) {
+                    previewImage.src = randomImagePath;
+                    previewImage.style.display = "block";
+                } else {
+                    previewImage.style.display = "none";
+                }
             }
             if (descriptionContainer) descriptionContainer.style.display = "block";
         } else {
@@ -156,13 +175,13 @@ function calculateReceipt() {
     document.getElementById('summary_price').innerText = "₱" + price;
     document.getElementById('summary_total').innerText = "₱" + total.toFixed(2);
     
-    // Update Hidden Input
+    
     document.getElementById('input_total_amount').value = total.toFixed(2);
 }
 
-// AUTO-SKIP LOGIC (Runs on Load)
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Auto-select type on load if a room was pre-selected via URL
+    
     updateRoomDetails();
 
     const bookingForm = document.getElementById('bookingForm');
@@ -174,7 +193,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const isTextarea = tag === 'textarea';
             const isSubmitButton = tag === 'button' && e.target.type === 'submit';
 
-            // Block Enter-to-submit on Steps 1-3 to prevent accidental booking.
             if (!isTextarea && !isSubmitButton && currentStep < 4) {
                 e.preventDefault();
             }
@@ -184,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const Check_In = document.getElementById('checkin');
     const Check_Out = document.getElementById('checkout');
 
-    // Helper to add days (must be defined before use)
+    
     function addDays(d, n) {
         const x = new Date(d.getTime());
         x.setDate(x.getDate() + n);
@@ -195,43 +213,43 @@ document.addEventListener('DOMContentLoaded', function() {
         const today = new Date();
         const isoToday = today.toISOString().split('T')[0];
         
-        // A. Set Minimum Check-in to Today
+        
         Check_In.min = isoToday;
 
-        // B. Validate Pre-filled Values (Fixes the issue you asked about)
+        
         if (Check_In.value) {
             const currentIn = new Date(Check_In.value);
             const minOut = addDays(currentIn, 1);
             
-            // Set minimum checkout date based on checkin
+            
             Check_Out.min = minOut;
 
-            // FIX: Compare values, not elements. Ensure checkout > checkin
+            
             if (Check_Out.value && Check_Out.value <= Check_In.value) {
-                Check_Out.value = minOut; // Auto-correct to the next day
+                Check_Out.value = minOut; 
             }
         } else {
-            // Default min checkout is tomorrow
+           
             Check_Out.min = addDays(today, 1);
         }
 
-        // C. Event Listener: When Check-in changes, update Check-out limits
+        
         Check_In.addEventListener('change', () => {
             if (!Check_In.value) return;
             
             const inDate = new Date(Check_In.value);
             const newMin = addDays(inDate, 1);
 
-            // Update the minimum allowed date for checkout
+            
             Check_Out.min = newMin;
 
-            // If current checkout is now invalid (before or same as new checkin), fix it
+            
             if (!Check_Out.value || Check_Out.value <= Check_In.value) {
                 Check_Out.value = newMin;
             }
         });
 
-        // D. Event Listener: Prevent manual invalid Check-out
+        
         Check_Out.addEventListener('change', () => {
             if (Check_In.value && Check_Out.value <= Check_In.value) {
                 alert("Check-out date must be after check-in date.");
@@ -247,31 +265,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const inVal = document.getElementById('checkin').value;
     const outVal = document.getElementById('checkout').value;
 
-    // Optional: We removed the auto-skip so users can review the dates in step 1.
-    // if (hasCheckin && hasCheckout && inVal && outVal) {
-    //    nextStep(2);
-    // }
-    // 3. Set initial Check-out Minimum
+
         if (Check_In.value) {
-            // If URL pre-filled the date, base min checkout on that
+            
             const currentIn = new Date(Check_In.value);
             Check_Out.min = addDays(currentIn, 1);
         } else {
             Check_Out.min = addDays(today, 1);
         }
 
-        // 4. Update Check-out constraints when Check-in changes
         Check_In.addEventListener('change', () => {
             if (!Check_In.value) return;
             
             const inDate = new Date(Check_In.value);
             const newMin = addDays(inDate, 1);
 
-            // If current checkout is invalid (before or same as new checkin), update it
+            
             if (!Check_Out.value || Check_Out.value <= Check_In.value) {
                 Check_Out.value = newMin;
             }
-            // Always update the minimum allowed date
+            
             Check_Out.min = newMin;
         })
 });
