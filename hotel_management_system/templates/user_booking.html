@@ -61,7 +61,7 @@
                     <h2 class="step_header">Step 2: Room Details</h2>
                     
                     <div class="form_group">
-                        <label>Room Type (Filter)</label>
+                        <label>Room Type</label>
                         <select id="room_type_select" onchange="filterRooms()">
                             <option value="">-- All Types --</option>
                             <option value="single_room" {% if request.args.get('room_type') == 'single_room' %}selected{% endif %}>Single Room</option>
@@ -78,7 +78,7 @@
                         <select id="room_id_select" name="room_id" required onchange="updateRoomDetails()">
                             <option value="">-- Select Room --</option>
                             {% for r in rooms %}
-                            <!-- r: 0=id, 1=number, 2=type, 3=amount -->
+                            
                             <option value="{{ r[0] }}" data-type="{{ r[2] }}" data-price="{{ r[3] }}"
                                 {% if request.args.get('room_number') == r[1] %}selected{% endif %}>
                                 Room {{ r[1] }}
@@ -105,8 +105,8 @@
                       <div class="form_group" style="background: #f9f9f9; padding: 1rem; border-radius: 0.5rem; display: none;" id="room_description_container">
                           <h4>Room Description</h4>
                           <img id="room_preview_image" src="" alt="Room Preview" style="width: 100%; border-radius: 0.5rem; margin-top: 1rem; margin-bottom: 1rem; display: none;">
-                          <p id="room_description_text" style="font-size: 0.9rem; color: #666;">
-                          </p>
+                          <div id="room_description_text" style="font-size: 0.9rem; color: #666;">
+                          </div>
                       </div>
 
                     <div class="wizard_btns">
@@ -145,7 +145,7 @@
                             <span>TOTAL AMOUNT:</span>
                             <span id="summary_total">$0.00</span>
                         </div>
-                        <!-- Hidden input for backend -->
+                        
                         <input type="hidden" name="total_amount" id="input_total_amount">
                     </div>
 
@@ -162,12 +162,12 @@
                     <div class="form_group">
                         <label>Full Name (Registered)</label>
                         {% if session.get('role') == 'admin' %}
-                            <!-- ADMIN VIEW: Editable Input -->
+                            
                             <input type="text" name="registered_name" placeholder="Enter Guest Name" required>
                             <small>Enter the name of the guest for this booking.</small>
                         {% else %}
 
-                        <!-- Displays Surname + Firstname from Session -->
+                        
                         <input type="text" name="registered_name" value="{{ session.get('surname', '') }} {{ session.get('firstname', '') }}" readonly>
                         <small>This booking will be registered under this name.</small>
                         {% endif %}

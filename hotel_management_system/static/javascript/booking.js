@@ -80,32 +80,32 @@ const roomInfo = {
     'single_room': {
         assetDir: 'Single',
         images: ['Single.jpg', 'Single1.jpg', 'Single2.jpg', 'Single3.jpg', 'Single4.jpg', 'Single5.jpg', 'Single6.jpg', 'Single7.jpg', 'Single8.jpg'],
-        desc: 'Ideal for business travelers or individuals, the Single Room features a comfortable twin-sized bed, a dedicated workspace, and modern amenities. It offers a private sanctuary with everything you need for a restful stay.'
+        desc: '<strong>Bed Type:</strong> 1 Single/Twin Bed<br><strong>Occupancy:</strong> 1 Adult<br><strong>Key Features:</strong><ul><li>Compact, ergonomic layout optimized for solo travelers.</li><li>Dedicated work desk with accessible power outlets.</li><li>En-suite bathroom with a walk-in rainfall shower.</li><li>Smart LED TV and high-speed Wi-Fi.</li><li>In-room coffee and tea-making facilities.</li></ul>'
     },
     'double_room': {
         assetDir: 'Double',
         images: ['Double1.jpg', 'Double2.jpg', 'Double3.jpg', 'Double4.jpg', 'Double5.jpg', 'Double6.jpg', 'Double7.jpg', 'Double8.jpg'],
-        desc: 'Our Double Room is equipped with a plush full or queen-sized bed, perfect for couples. The room is thoughtfully designed with contemporary decor, high-speed internet, and a spacious bathroom to ensure a relaxing experience.'
+        desc: '<strong>Bed Type:</strong> 1 Queen or King Bed<br><strong>Occupancy:</strong> 2 Adults<br><strong>Key Features:</strong><ul><li>Spacious floor plan with a comfortable seating area.</li><li>Large wardrobe with an integrated digital safe.</li><li>Blackout curtains for an undisturbed sleep experience.</li><li>Modern vanity mirror and full-length mirror.</li><li>Individually controlled air conditioning and heating.</li></ul>'
     },
     'twin_room': {
         assetDir: 'Twin',
         images: ['Twin.jpg', 'Twin1.jpg', 'Twin2.jpg', 'Twin3.jpg', 'Twin4.jpg', 'Twin5.jpg', 'Twin6.jpg', 'Twin7.jpg', 'Twin8.jpg'],
-        desc: 'Perfect for friends or colleagues traveling together, the Twin Room offers two separate single beds. The layout maximizes space and comfort, providing individual sleeping areas without compromising on style or amenities.'
+        desc: '<strong>Bed Type:</strong> 2 Separate Single Beds<br><strong>Occupancy:</strong> 2 Adults<br><strong>Key Features:</strong><ul><li>Symmetrical layout providing equal space for both guests.</li><li>Dual bedside tables with individual reading lamps.</li><li>Large windows providing ample natural light.</li><li>High-speed internet access and multiple USB charging ports.</li><li>Private bathroom stocked with premium towels and toiletries.</li></ul>'
     },
     'premium_room': {
         assetDir: 'Premium',
         images: ['Premium.jpg', 'Premium1.jpg', 'Premium2.jpg', 'Premium3.jpg', 'Premium4.jpg', 'Premium5.jpg', 'Premium6.jpg', 'Premium7.jpg', 'Premium8.jpg'],
-        desc: 'Our Deluxe Room offers a blend of luxury and functionality. It features a generous floor plan, sophisticated interior design, a lounge seating area, and an oversized bathroom. It is designed for guests who prioritize comfort and aesthetic appeal.'
+        desc: '<strong>Bed Type:</strong> 1 Luxury King Bed<br><strong>Occupancy:</strong> 2 Adults<br><strong>Key Features:</strong><ul><li>Located on higher floors for better city or garden views.</li><li>Upgraded bedding featuring high-thread-count linens.</li><li>Mini-bar stocked with a selection of beverages and snacks.</li><li>Bathrobes and plush slippers provided for extra comfort.</li><li>Enhanced soundproofing for a quieter environment.</li></ul>'
     },
     'deluxe_room': {
         assetDir: 'Deluxe',
         images: ['Deluxe.jpg', 'Deluxe1.jpg', 'Deluxe2.jpg', 'Deluxe3.jpg', 'Deluxe4.jpg', 'Deluxe5.jpg', 'Deluxe6.jpg', 'Deluxe7.png', 'Deluxe8.jpg'],
-        desc: 'Designed for the high-end traveler, the Executive Room offers the pinnacle of hotel living. It includes a king-sized bed, a spacious ergonomic workstation, and access to exclusive services. With refined decor and top-tier amenities, it provides an environment conducive to both productivity and relaxation.'
+        desc: '<strong>Bed Type:</strong> 1 California King Bed<br><strong>Occupancy:</strong> 2 Adults (Space for 1 extra bed)<br><strong>Key Features:</strong><ul><li>Expansive living space including a small lounge or sofa area.</li><li>Luxury bathroom featuring a separate soaking tub and shower.</li><li>State-of-the-art entertainment system with surround sound.</li><li>Nespresso machine or premium coffee station.</li><li>Walk-in closet with ample storage for long-term stays.</li></ul>'
     },
     'executive_room': {
         assetDir: 'Executive',
         images: ['Executive.jpg', 'Executive1.jpg', 'Executive2.jpg', 'Executive3.jpg', 'Executive4.jpg', 'Executive5.jpg', 'Executive6.jpg', 'Executive7.jpg', 'Executive8.jpg'],
-        desc: 'Designed for the modern professional. Spacious and sophisticated with working space and top-tier facilities.'
+        desc: '<strong>Bed Type:</strong> 1 Grand King Bed<br><strong>Occupancy:</strong> 2 Adults<br><strong>Key Features:</strong><ul><li>Top-floor location with panoramic views.</li><li>Large ergonomic workstation designed for business productivity.</li><li>Exclusive access to the Executive Lounge (complimentary breakfast/drinks).</li><li>Smart room automation (lighting, temperature, and drapes controlled by tablet).</li><li>Priority check-in and late check-out services.</li></ul>'
     }
 };
 
@@ -131,7 +131,7 @@ function updateRoomDetails() {
         typeSelect.value = roomType;
 
         if (roomType && roomInfo[roomType]) {
-            descriptionText.innerText = roomInfo[roomType].desc;
+            descriptionText.innerHTML = roomInfo[roomType].desc;
             if (previewImage) {
                 const randomImagePath = getRandomRoomImagePath(roomType);
                 if (randomImagePath) {

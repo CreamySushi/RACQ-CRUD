@@ -22,11 +22,11 @@
               <tr>
                 <td>{{ book[0] }}</td> <!-- Room Type -->
                 <td>{{ book[1] }}</td> <!-- Room Number -->
-                <td>${{ book[2] }}</td> <!-- Amount -->
+                <td>₱{{ book[2] }}</td> <!-- Amount -->
                 <td>{{ book[3] }}</td> <!-- Check-in -->
                 <td>{{ book[4] }}</td> <!-- Check-out -->
                 <td>
-                  <!-- Display Status with simple styling logic -->
+                  
                   {% if book[5] == 'active' %}
                     <span style="color: green; font-weight: bold;">Active</span>
                   {% elif book[5] == 'upcoming' %}

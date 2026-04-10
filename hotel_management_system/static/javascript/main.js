@@ -246,8 +246,84 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightbox = document.getElementById('galleryLightbox');
     const lightboxImage = document.getElementById('galleryLightboxImage');
     const lightboxCaption = document.getElementById('galleryLightboxCaption');
+    const lightboxDesc = document.getElementById('galleryLightboxDesc');
     const lightboxClose = document.getElementById('galleryLightboxClose');
     const mediaButtons = document.querySelectorAll('.gallery_media_btn');
+
+    const roomDescriptions = {
+        single: {
+            name: 'Single Room',
+            bedType: '1 Single/Twin Bed',
+            occupancy: '1 Adult',
+            features: [
+                'Compact, ergonomic layout optimized for solo travelers.',
+                'Dedicated work desk with accessible power outlets.',
+                'En-suite bathroom with a walk-in rainfall shower.',
+                'Smart LED TV and high-speed Wi-Fi.',
+                'In-room coffee and tea-making facilities.'
+            ]
+        },
+        double: {
+            name: 'Double Room',
+            bedType: '1 Queen or King Bed',
+            occupancy: '2 Adults',
+            features: [
+                'Spacious floor plan with a comfortable seating area.',
+                'Large wardrobe with an integrated digital safe.',
+                'Blackout curtains for an undisturbed sleep experience.',
+                'Modern vanity mirror and full-length mirror.',
+                'Individually controlled air conditioning and heating.'
+            ]
+        },
+        twin: {
+            name: 'Twin Room',
+            bedType: '2 Separate Single Beds',
+            occupancy: '2 Adults',
+            features: [
+                'Symmetrical layout providing equal space for both guests.',
+                'Dual bedside tables with individual reading lamps.',
+                'Large windows providing ample natural light.',
+                'High-speed internet access and multiple USB charging ports.',
+                'Private bathroom stocked with premium towels and toiletries.'
+            ]
+        },
+        premium: {
+            name: 'Premium Room',
+            bedType: '1 Luxury King Bed',
+            occupancy: '2 Adults',
+            features: [
+                'Located on higher floors for better city or garden views.',
+                'Upgraded bedding featuring high-thread-count linens.',
+                'Mini-bar stocked with a selection of beverages and snacks.',
+                'Bathrobes and plush slippers provided for extra comfort.',
+                'Enhanced soundproofing for a quieter environment.'
+            ]
+        },
+        deluxe: {
+            name: 'Deluxe Room',
+            bedType: '1 California King Bed',
+            occupancy: '2 Adults (Space for 1 extra bed)',
+            features: [
+                'Expansive living space including a small lounge or sofa area.',
+                'Luxury bathroom featuring a separate soaking tub and shower.',
+                'State-of-the-art entertainment system with surround sound.',
+                'Nespresso machine or premium coffee station.',
+                'Walk-in closet with ample storage for long-term stays.'
+            ]
+        },
+        executive: {
+            name: 'Executive Room',
+            bedType: '1 Grand King Bed',
+            occupancy: '2 Adults',
+            features: [
+                'Top-floor location with panoramic views.',
+                'Large ergonomic workstation designed for business productivity.',
+                'Exclusive access to the Executive Lounge (complimentary breakfast/drinks).',
+                'Smart room automation (lighting, temperature, and drapes controlled by tablet).',
+                'Priority check-in and late check-out services.'
+            ]
+        }
+    };
 
     if (filterButtons.length && galleryItems.length) {
         filterButtons.forEach((button) => {
@@ -271,12 +347,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (lightbox && lightboxImage && lightboxCaption && mediaButtons.length) {
+    if (lightbox && lightboxImage && mediaButtons.length) {
         const closeLightbox = () => {
             lightbox.classList.remove('open');
             lightbox.setAttribute('aria-hidden', 'true');
             lightboxImage.src = '';
             lightboxCaption.textContent = '';
+            lightboxDesc.innerHTML = '';
             document.body.style.overflow = '';
         };
 
@@ -284,10 +361,29 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', () => {
                 const fullImage = button.getAttribute('data-full');
                 const caption = button.getAttribute('data-caption') || '';
+                const roomType = button.getAttribute('data-room-type') || '';
+                
                 if (!fullImage) return;
 
                 lightboxImage.src = fullImage;
                 lightboxCaption.textContent = caption;
+
+                if (roomType && roomDescriptions[roomType]) {
+                    const desc = roomDescriptions[roomType];
+                    let descHTML = `<h3>${desc.name}</h3>`;
+                    descHTML += `<p><strong>Bed Type:</strong> ${desc.bedType}</p>`;
+                    descHTML += `<p><strong>Occupancy:</strong> ${desc.occupancy}</p>`;
+                    descHTML += `<p><strong>Key Features:</strong></p><ul>`;
+                    desc.features.forEach(feature => {
+                        descHTML += `<li>${feature}</li>`;
+                    });
+                    descHTML += `</ul>`;
+                    
+                    if (lightboxDesc) {
+                        lightboxDesc.innerHTML = descHTML;
+                    }
+                }
+
                 lightbox.classList.add('open');
                 lightbox.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
