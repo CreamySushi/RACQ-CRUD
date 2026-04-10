@@ -340,7 +340,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 galleryItems.forEach((item) => {
                     const category = item.getAttribute('data-category');
-                    const showItem = selected === 'all' || selected === category;
+                    const isShowcase = item.getAttribute('data-showcase') === 'true';
+                    
+                    let showItem = false;
+                    if (selected === 'all') {
+                        showItem = isShowcase;
+                    } else {
+                        showItem = selected === category;
+                    }
+                    
                     item.classList.toggle('hidden', !showItem);
                 });
             });

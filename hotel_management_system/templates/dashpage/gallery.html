@@ -27,7 +27,7 @@
 
     <div class="gallery_grid" id="galleryGrid">
       <!-- Single Room Images -->
-      <figure class="gallery_item" data-category="single" data-room-type="single">
+      <figure class="gallery_item" data-category="single" data-room-type="single" data-showcase="true">
         <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Single/Single.jpg') }}" data-caption="Single Room" data-room-type="single"><img src="{{ url_for('static', filename='assets/Single/Single.jpg') }}" alt="Single Room"></button>
         <figcaption>Single Room</figcaption>
       </figure>
@@ -61,7 +61,7 @@
       </figure>
 
       <!-- Double Room Images -->
-      <figure class="gallery_item" data-category="double" data-room-type="double">
+      <figure class="gallery_item" data-category="double" data-room-type="double" data-showcase="true">
         <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Double/Double1.jpg') }}" data-caption="Double Room" data-room-type="double"><img src="{{ url_for('static', filename='assets/Double/Double1.jpg') }}" alt="Double Room"></button>
         <figcaption>Double Room</figcaption>
       </figure>
@@ -95,7 +95,7 @@
       </figure>
 
       <!-- Twin Room Images -->
-      <figure class="gallery_item" data-category="twin" data-room-type="twin">
+      <figure class="gallery_item" data-category="twin" data-room-type="twin" data-showcase="true">
         <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Twin/Twin.jpg') }}" data-caption="Twin Room" data-room-type="twin"><img src="{{ url_for('static', filename='assets/Twin/Twin.jpg') }}" alt="Twin Room"></button>
         <figcaption>Twin Room</figcaption>
       </figure>
@@ -129,7 +129,7 @@
       </figure>
 
       <!-- Premium Room Images -->
-      <figure class="gallery_item" data-category="premium" data-room-type="premium">
+      <figure class="gallery_item" data-category="premium" data-room-type="premium" data-showcase="true">
         <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Premium/Premium.jpg') }}" data-caption="Premium Room" data-room-type="premium"><img src="{{ url_for('static', filename='assets/Premium/Premium.jpg') }}" alt="Premium Room"></button>
         <figcaption>Premium Room</figcaption>
       </figure>
@@ -163,7 +163,7 @@
       </figure>
 
       <!-- Deluxe Room Images -->
-      <figure class="gallery_item" data-category="deluxe" data-room-type="deluxe">
+      <figure class="gallery_item" data-category="deluxe" data-room-type="deluxe" data-showcase="true">
         <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Deluxe/Deluxe.jpg') }}" data-caption="Deluxe Room" data-room-type="deluxe"><img src="{{ url_for('static', filename='assets/Deluxe/Deluxe.jpg') }}" alt="Deluxe Room"></button>
         <figcaption>Deluxe Room</figcaption>
       </figure>
@@ -193,7 +193,7 @@
       </figure>
 
       <!-- Executive Room Images -->
-      <figure class="gallery_item" data-category="executive" data-room-type="executive">
+      <figure class="gallery_item" data-category="executive" data-room-type="executive" data-showcase="true">
         <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Executive/Executive.jpg') }}" data-caption="Executive Room" data-room-type="executive"><img src="{{ url_for('static', filename='assets/Executive/Executive.jpg') }}" alt="Executive Room"></button>
         <figcaption>Executive Room</figcaption>
       </figure>
@@ -225,86 +225,6 @@
         <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Executive/Executive7.jpg') }}" data-caption="Executive Room" data-room-type="executive"><img src="{{ url_for('static', filename='assets/Executive/Executive7.jpg') }}" alt="Executive Room"></button>
         <figcaption>Executive Room</figcaption>
       </figure>
-    </div>
-
-    <div class="gallery_room_details">
-      <article class="gallery_detail_card">
-        <h3>Single Room</h3>
-        <p><strong>Bed Type:</strong> 1 Single/Twin Bed</p>
-        <p><strong>Occupancy:</strong> 1 Adult</p>
-        <ul>
-          <li>Compact, ergonomic layout optimized for solo travelers.</li>
-          <li>Dedicated work desk with accessible power outlets.</li>
-          <li>En-suite bathroom with a walk-in rainfall shower.</li>
-          <li>Smart LED TV and high-speed Wi-Fi.</li>
-          <li>In-room coffee and tea-making facilities.</li>
-        </ul>
-      </article>
-
-      <article class="gallery_detail_card">
-        <h3>Double Room</h3>
-        <p><strong>Bed Type:</strong> 1 Queen or King Bed</p>
-        <p><strong>Occupancy:</strong> 2 Adults</p>
-        <ul>
-          <li>Spacious floor plan with a comfortable seating area.</li>
-          <li>Large wardrobe with an integrated digital safe.</li>
-          <li>Blackout curtains for an undisturbed sleep experience.</li>
-          <li>Modern vanity mirror and full-length mirror.</li>
-          <li>Individually controlled air conditioning and heating.</li>
-        </ul>
-      </article>
-
-      <article class="gallery_detail_card">
-        <h3>Twin Room</h3>
-        <p><strong>Bed Type:</strong> 2 Separate Single Beds</p>
-        <p><strong>Occupancy:</strong> 2 Adults</p>
-        <ul>
-          <li>Symmetrical layout providing equal space for both guests.</li>
-          <li>Dual bedside tables with individual reading lamps.</li>
-          <li>Large windows providing ample natural light.</li>
-          <li>High-speed internet access and multiple USB charging ports.</li>
-          <li>Private bathroom stocked with premium towels and toiletries.</li>
-        </ul>
-      </article>
-
-      <article class="gallery_detail_card">
-        <h3>Premium Room</h3>
-        <p><strong>Bed Type:</strong> 1 Luxury King Bed</p>
-        <p><strong>Occupancy:</strong> 2 Adults</p>
-        <ul>
-          <li>Located on higher floors for better city or garden views.</li>
-          <li>Upgraded bedding featuring high-thread-count linens.</li>
-          <li>Mini-bar stocked with a selection of beverages and snacks.</li>
-          <li>Bathrobes and plush slippers provided for extra comfort.</li>
-          <li>Enhanced soundproofing for a quieter environment.</li>
-        </ul>
-      </article>
-
-      <article class="gallery_detail_card">
-        <h3>Deluxe Room</h3>
-        <p><strong>Bed Type:</strong> 1 California King Bed</p>
-        <p><strong>Occupancy:</strong> 2 Adults (Space for 1 extra bed)</p>
-        <ul>
-          <li>Expansive living space including a small lounge or sofa area.</li>
-          <li>Luxury bathroom featuring a separate soaking tub and shower.</li>
-          <li>State-of-the-art entertainment system with surround sound.</li>
-          <li>Nespresso machine or premium coffee station.</li>
-          <li>Walk-in closet with ample storage for long-term stays.</li>
-        </ul>
-      </article>
-
-      <article class="gallery_detail_card">
-        <h3>Executive Room</h3>
-        <p><strong>Bed Type:</strong> 1 Grand King Bed</p>
-        <p><strong>Occupancy:</strong> 2 Adults</p>
-        <ul>
-          <li>Top-floor location with panoramic views.</li>
-          <li>Large ergonomic workstation designed for business productivity.</li>
-          <li>Exclusive access to the Executive Lounge (complimentary breakfast/drinks).</li>
-          <li>Smart room automation (lighting, temperature, and drapes controlled by tablet).</li>
-          <li>Priority check-in and late check-out services.</li>
-        </ul>
-      </article>
     </div>
   </div>
 </section>

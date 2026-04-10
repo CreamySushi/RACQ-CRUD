@@ -812,40 +812,6 @@ footer { margin-top: auto; }
     display: none;
 }
 
-.gallery_room_details {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-}
-
-.gallery_detail_card {
-    background: var(--color11);
-    border: 1px solid #dbe5ec;
-    border-radius: 0.9rem;
-    padding: 1rem;
-    box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.05);
-}
-
-.gallery_detail_card h3 {
-    color: var(--color2);
-    margin-bottom: 0.4rem;
-}
-
-.gallery_detail_card p {
-    color: var(--text-muted);
-    margin-bottom: 0.35rem;
-    line-height: 1.5;
-}
-
-.gallery_detail_card ul {
-    margin-top: 0.45rem;
-    margin-left: 1.1rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-    list-style: disc;
-}
-
 .gallery_lightbox {
     position: fixed;
     inset: 0;
