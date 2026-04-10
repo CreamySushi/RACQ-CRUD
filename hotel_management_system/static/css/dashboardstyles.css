@@ -96,6 +96,7 @@ textarea {
 #home_section    { background: var(--brand-cream); }
 #about_section   { background: #F4F0E8; }
 #rooms_section   { background: #EDEAF6; }
+#gallery_section { background: #EEF4F7; }
 #review_section  { background: var(--brand-cream); padding-bottom: clamp(2rem, 6vh, 4rem); }
 #overview_section{ background: #F0EEF8; }
 
@@ -713,6 +714,148 @@ footer { margin-top: auto; }
 .room_info h4   { margin-bottom: 0.5rem; font-size: 1.3rem; color: var(--color2); }
 .room_info p    { font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--color4); line-height: 1.6; }
 .room_info .btn { width: 100%; border-radius: 0.5rem; }
+
+/* ========================================================================== 
+   GALLERY PAGE 
+   ========================================================================== */
+
+.gallery_header {
+    background: linear-gradient(110deg, rgba(16, 39, 64, 0.92), rgba(38, 77, 114, 0.74)),
+                url("/static/assets/rooms-page.jpg") center/cover no-repeat;
+    min-height: 58vh;
+}
+
+.gallery_section_wrap {
+    padding: 3rem 0 4rem;
+}
+
+.gallery_top {
+    margin-bottom: 1.5rem;
+}
+
+.gallery_top h2 {
+    color: var(--color2);
+    margin-bottom: 0.35rem;
+}
+
+.gallery_top p {
+    color: var(--text-muted);
+    max-width: 68ch;
+}
+
+.gallery_filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: 1.8rem;
+}
+
+.gallery_filter_btn {
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--color2);
+    background: transparent;
+    color: var(--color2);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.gallery_filter_btn:hover,
+.gallery_filter_btn.active {
+    background: var(--color2);
+    color: var(--color11);
+}
+
+.gallery_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.gallery_item {
+    background: var(--color11);
+    border-radius: 0.9rem;
+    overflow: hidden;
+    border: 1px solid #dbe5ec;
+    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.06);
+}
+
+.gallery_media_btn {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.gallery_media_btn img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery_item:hover .gallery_media_btn img {
+    transform: scale(1.045);
+}
+
+.gallery_item figcaption {
+    padding: 0.7rem 0.85rem;
+    color: var(--color2);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.gallery_item.hidden {
+    display: none;
+}
+
+.gallery_lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.84);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.5rem;
+    z-index: 3000;
+}
+
+.gallery_lightbox.open {
+    display: flex;
+}
+
+.gallery_lightbox img {
+    width: min(92vw, 980px);
+    max-height: 78vh;
+    object-fit: contain;
+    border-radius: 0.6rem;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+.gallery_lightbox p {
+    color: #f2f4f8;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.gallery_lightbox_close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+}
 
 /* ==========================================================================
    BOOKING WIZARD

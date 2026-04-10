@@ -14,13 +14,13 @@ function ensureRoomsHeroLoaded() {
     roomsHeader.classList.add('hero-ready');
 }
 
-// 1. Function to switch pages
+
 function showPage(pageId, event) {
     if (event) event.preventDefault();
 
     window.location.hash = pageId;
 
-    // Update Navbar Indicator
+   
     const navLinks = document.querySelectorAll('.nav_menu a');
     navLinks.forEach(link => link.classList.remove('active'));
 
@@ -29,7 +29,7 @@ function showPage(pageId, event) {
         activeNavLink.classList.add('active');
     }
 
-    // Show Content
+   
     const pages = document.querySelectorAll('.page-content');
     pages.forEach(page => {
         page.style.display = 'none';
@@ -47,21 +47,21 @@ function showPage(pageId, event) {
     if (event) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        // On redirects/hash loads, reset browser-restored scroll to avoid blank gaps.
+        
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
 }
 
-// 2. Profile Dropdown Toggle
+
 function toggleProfileMenu(event) {
-    if (event && event.stopPropagation) event.stopPropagation(); // Prevent click from bubbling to window
+    if (event && event.stopPropagation) event.stopPropagation(); 
     const menu = document.getElementById('profileDropdown');
     if (menu) {
         menu.classList.toggle('show');
     }
 }
 
-// 3. Close dropdown when clicking anywhere else
+
 window.addEventListener('click', function (e) {
     const menu = document.getElementById('profileDropdown');
     if (menu && menu.classList.contains('show')) {
@@ -71,7 +71,7 @@ window.addEventListener('click', function (e) {
     }
 });
 
-// 4. Date Picker Logic (Wrapped in DOMContentLoaded to be safe)
+
 document.addEventListener('DOMContentLoaded', function () {
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
@@ -82,10 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const hash = window.location.hash.substring(1);
     if (hash && document.getElementById(hash)) {
-        // If hash exists and matches an ID, show that page
+       
         showPage(hash, null);
     } else {
-        // Default to Home if no hash
+        
         showPage('home_section', null);
     }
 
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(prefetchRoomsHero, 1200);
     }
 
-    // Only run if elements exist
+    
     if (inEl && outEl) {
         const today = new Date();
         const isoToday = today.toISOString().split('T')[0];
@@ -133,13 +133,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const header = this.parentElement;
             let input = header.querySelector('.dynamic-search');
 
-            // If input exists, we are in "Close" mode
+            
             if (input) {
                 input.remove();
                 this.textContent = 'Filter';
                 this.classList.remove('active');
                 
-                // Reset table rows to show everything
+                
                 const tableWrapper = header.nextElementSibling; 
                 const rows = tableWrapper.querySelectorAll('tbody tr');
                 rows.forEach(row => row.style.display = '');
@@ -158,17 +158,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.add('active');
                 input.focus();
 
-                // Add the typing listener
+                
                 input.addEventListener('keyup', function() {
                     const filterValue = this.value.toLowerCase();
                     const tableWrapper = header.nextElementSibling;
                     const rows = tableWrapper.querySelectorAll('tbody tr');
 
                     rows.forEach(row => {
-                        // Get all text in the row
+                        
                         const rowText = row.textContent.toLowerCase();
                         
-                        // If row contains the filter text, show it, else hide it
+                        
                         if (rowText.includes(filterValue)) {
                             row.style.display = '';
                         } else {
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.toggle('menu-open', isOpen);
             navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             
-            // Change icon when active
+            
             const icon = navToggle.querySelector('i');
             if(isOpen) {
                 icon.className = 'uil uil-multiply'; // Close icon
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Hide nav menu on smaller screens when link is clicked or outside is clicked
+    
     document.addEventListener('click', (e) => {
         if (window.innerWidth <= 1024 && navMenu && navMenu.classList.contains('active')) {
             if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
@@ -237,4 +237,77 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+});
+
+// Gallery filters and lightbox
+document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.gallery_filter_btn');
+    const galleryItems = document.querySelectorAll('.gallery_item');
+    const lightbox = document.getElementById('galleryLightbox');
+    const lightboxImage = document.getElementById('galleryLightboxImage');
+    const lightboxCaption = document.getElementById('galleryLightboxCaption');
+    const lightboxClose = document.getElementById('galleryLightboxClose');
+    const mediaButtons = document.querySelectorAll('.gallery_media_btn');
+
+    if (filterButtons.length && galleryItems.length) {
+        filterButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const selected = button.getAttribute('data-filter');
+
+                filterButtons.forEach((btn) => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                });
+
+                button.classList.add('active');
+                button.setAttribute('aria-pressed', 'true');
+
+                galleryItems.forEach((item) => {
+                    const category = item.getAttribute('data-category');
+                    const showItem = selected === 'all' || selected === category;
+                    item.classList.toggle('hidden', !showItem);
+                });
+            });
+        });
+    }
+
+    if (lightbox && lightboxImage && lightboxCaption && mediaButtons.length) {
+        const closeLightbox = () => {
+            lightbox.classList.remove('open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            lightboxImage.src = '';
+            lightboxCaption.textContent = '';
+            document.body.style.overflow = '';
+        };
+
+        mediaButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const fullImage = button.getAttribute('data-full');
+                const caption = button.getAttribute('data-caption') || '';
+                if (!fullImage) return;
+
+                lightboxImage.src = fullImage;
+                lightboxCaption.textContent = caption;
+                lightbox.classList.add('open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        if (lightboxClose) {
+            lightboxClose.addEventListener('click', closeLightbox);
+        }
+
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+                closeLightbox();
+            }
+        });
+    }
 });

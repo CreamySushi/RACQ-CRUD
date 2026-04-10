@@ -27,19 +27,18 @@ function nextStep(step) {
                 return;
             }
             
-            // Calculate totals before showing Step 3
             calculateReceipt();
         }
     }
 
-    // Hide all steps
+   
     document.querySelectorAll('.form_step').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.progress_step').forEach(el => el.classList.remove('active'));
 
-    // Show target step
+    
     document.getElementById('step' + step).classList.add('active');
     
-    // Update progress bar (highlight all steps up to current)
+
     for(let i=1; i<=step; i++) {
         document.getElementById('p_step' + i).classList.add('active');
     }
@@ -72,7 +71,6 @@ function filterRooms() {
         }
     }
     
-    // Reset selection if current selection is hidden
     if (roomSelect.selectedOptions[0].style.display === "none") {
         roomSelect.value = "";
     }
@@ -82,27 +80,27 @@ const roomInfo = {
     'single_room': {
         assetDir: 'Single',
         images: ['Single.jpg', 'Single1.jpg', 'Single2.jpg', 'Single3.jpg', 'Single4.jpg', 'Single5.jpg', 'Single6.jpg', 'Single7.jpg', 'Single8.jpg'],
-        desc: 'Perfect for solo travelers. A cozy and comfortable room equipped with all the essentials for a relaxing stay.'
+        desc: 'Ideal for business travelers or individuals, the Single Room features a comfortable twin-sized bed, a dedicated workspace, and modern amenities. It offers a private sanctuary with everything you need for a restful stay.'
     },
     'double_room': {
         assetDir: 'Double',
         images: ['Double1.jpg', 'Double2.jpg', 'Double3.jpg', 'Double4.jpg', 'Double5.jpg', 'Double6.jpg', 'Double7.jpg', 'Double8.jpg'],
-        desc: 'Ideal for couples or friends. A spacious room featuring a comfortable double bed and modern amenities.'
+        desc: 'Our Double Room is equipped with a plush full or queen-sized bed, perfect for couples. The room is thoughtfully designed with contemporary decor, high-speed internet, and a spacious bathroom to ensure a relaxing experience.'
     },
     'twin_room': {
         assetDir: 'Twin',
         images: ['Twin.jpg', 'Twin1.jpg', 'Twin2.jpg', 'Twin3.jpg', 'Twin4.jpg', 'Twin5.jpg', 'Twin6.jpg', 'Twin7.jpg', 'Twin8.jpg'],
-        desc: 'Great for companions. This room offers two separate single beds for individual comfort.'
+        desc: 'Perfect for friends or colleagues traveling together, the Twin Room offers two separate single beds. The layout maximizes space and comfort, providing individual sleeping areas without compromising on style or amenities.'
     },
     'premium_room': {
         assetDir: 'Premium',
         images: ['Premium.jpg', 'Premium1.jpg', 'Premium2.jpg', 'Premium3.jpg', 'Premium4.jpg', 'Premium5.jpg', 'Premium6.jpg', 'Premium7.jpg', 'Premium8.jpg'],
-        desc: 'Experience elevated luxury. Premium rooms offer extra space, superior comfort, and exclusive amenities.'
+        desc: 'Our Deluxe Room offers a blend of luxury and functionality. It features a generous floor plan, sophisticated interior design, a lounge seating area, and an oversized bathroom. It is designed for guests who prioritize comfort and aesthetic appeal.'
     },
     'deluxe_room': {
         assetDir: 'Deluxe',
         images: ['Deluxe.jpg', 'Deluxe1.jpg', 'Deluxe2.jpg', 'Deluxe3.jpg', 'Deluxe4.jpg', 'Deluxe5.jpg', 'Deluxe6.jpg', 'Deluxe7.png', 'Deluxe8.jpg'],
-        desc: 'A touch of elegance. Our Deluxe rooms provide premium furnishings and beautiful views for an unforgettable stay.'
+        desc: 'Designed for the high-end traveler, the Executive Room offers the pinnacle of hotel living. It includes a king-sized bed, a spacious ergonomic workstation, and access to exclusive services. With refined decor and top-tier amenities, it provides an environment conducive to both productivity and relaxation.'
     },
     'executive_room': {
         assetDir: 'Executive',

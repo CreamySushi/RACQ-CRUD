@@ -26,6 +26,7 @@
         <li><a href="#" class="active" onclick="showPage('home_section', event)">Home</a></li>
         <li><a href="#" onclick="showPage('about_section', event)">About Us</a></li>
         <li><a href="#" onclick="showPage('rooms_section', event)">Rooms & Suites</a></li>
+        <li><a href="#" onclick="showPage('gallery_section', event)">Gallery</a></li>
 
         {% if session.get('role') == 'admin' %}
           <li><a href="#" onclick="showPage('overview_section', event)">Overview</a></li>
@@ -69,6 +70,11 @@
     <div id="rooms_section" class="page-content" style="display: none;">
       {% include 'dashpage/rooms.html' %}
     </div>
+
+    <div id="gallery_section" class="page-content" style="display: none;">
+      {% include 'dashpage/gallery.html' %}
+    </div>
+
     <div id="review_section" class="page-content" style="display: none;">
       {% include 'dashpage/review.html' %}
     </div>

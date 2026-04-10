@@ -1,0 +1,120 @@
+<header class="gallery_header">
+  <div class="container header_container">
+    <div class="header_left">
+      <h1>Explore Our Gallery</h1>
+      <p>Discover our rooms and hotel spaces through curated highlights designed to help you choose your perfect stay.</p>
+      <a href="{{ url_for('booking') }}" class="btn">Book Your Stay</a>
+    </div>
+  </div>
+</header>
+
+<section class="gallery_section_wrap">
+  <div class="container gallery_container">
+    <div class="gallery_top">
+      <h2>Hotel Moments</h2>
+      <p>All tiles are presented in a unified layout for a clean, balanced gallery experience.</p>
+    </div>
+
+    <div class="gallery_filters" role="tablist" aria-label="Gallery Categories">
+      <button class="gallery_filter_btn active" data-filter="all" aria-pressed="true">All</button>
+      <button class="gallery_filter_btn" data-filter="single" aria-pressed="false">Single</button>
+      <button class="gallery_filter_btn" data-filter="double" aria-pressed="false">Double</button>
+      <button class="gallery_filter_btn" data-filter="twin" aria-pressed="false">Twin</button>
+      <button class="gallery_filter_btn" data-filter="premium" aria-pressed="false">Premium</button>
+      <button class="gallery_filter_btn" data-filter="deluxe" aria-pressed="false">Deluxe</button>
+      <button class="gallery_filter_btn" data-filter="executive" aria-pressed="false">Executive</button>
+    </div>
+
+    <div class="gallery_grid" id="galleryGrid">
+      <figure class="gallery_item" data-category="single">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Single/Single1.jpg') }}" data-caption="Single Room - bright and comfortable setup">
+          <img src="{{ url_for('static', filename='assets/Single/Single1.jpg') }}" alt="Single Room interior with a warm and cozy design">
+        </button>
+        <figcaption>Single Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="single">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Single/Single4.jpg') }}" data-caption="Single Room - compact layout with modern furnishings">
+          <img src="{{ url_for('static', filename='assets/Single/Single4.jpg') }}" alt="Single Room compact layout with contemporary decor">
+        </button>
+        <figcaption>Single Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="double">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Double/Double2.jpg') }}" data-caption="Double Room - spacious bed and relaxing ambiance">
+          <img src="{{ url_for('static', filename='assets/Double/Double2.jpg') }}" alt="Double Room with a spacious bed and soft ambient lighting">
+        </button>
+        <figcaption>Double Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="double">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Double/Double6.jpg') }}" data-caption="Double Room - clean design for couples and business travelers">
+          <img src="{{ url_for('static', filename='assets/Double/Double6.jpg') }}" alt="Double Room featuring clean design and practical comfort">
+        </button>
+        <figcaption>Double Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="twin">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Twin/Twin2.jpg') }}" data-caption="Twin Room - twin beds for shared stays">
+          <img src="{{ url_for('static', filename='assets/Twin/Twin2.jpg') }}" alt="Twin Room with two separate beds and neutral palette">
+        </button>
+        <figcaption>Twin Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="twin">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Twin/Twin6.jpg') }}" data-caption="Twin Room - functional and guest-friendly layout">
+          <img src="{{ url_for('static', filename='assets/Twin/Twin6.jpg') }}" alt="Twin Room configured for friends or families traveling together">
+        </button>
+        <figcaption>Twin Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="premium">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Premium/Premium2.jpg') }}" data-caption="Premium Room - upgraded comfort and elevated finishes">
+          <img src="{{ url_for('static', filename='assets/Premium/Premium2.jpg') }}" alt="Premium Room with upgraded finishes and stylish decor">
+        </button>
+        <figcaption>Premium Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="premium">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Premium/Premium7.jpg') }}" data-caption="Premium Room - polished interiors with premium touches">
+          <img src="{{ url_for('static', filename='assets/Premium/Premium7.jpg') }}" alt="Premium Room interior with modern furniture and soft accents">
+        </button>
+        <figcaption>Premium Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="deluxe">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Deluxe/Deluxe2.jpg') }}" data-caption="Deluxe Room - elegant atmosphere and extra space">
+          <img src="{{ url_for('static', filename='assets/Deluxe/Deluxe2.jpg') }}" alt="Deluxe Room with elegant atmosphere and extra floor space">
+        </button>
+        <figcaption>Deluxe Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="deluxe">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Deluxe/Deluxe6.jpg') }}" data-caption="Deluxe Room - refined detail and restful ambiance">
+          <img src="{{ url_for('static', filename='assets/Deluxe/Deluxe6.jpg') }}" alt="Deluxe Room with tasteful details and restful ambiance">
+        </button>
+        <figcaption>Deluxe Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="executive">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Executive/Executive2.jpg') }}" data-caption="Executive Room - premium setup for business and luxury stays">
+          <img src="{{ url_for('static', filename='assets/Executive/Executive2.jpg') }}" alt="Executive Room designed for business travelers and premium comfort">
+        </button>
+        <figcaption>Executive Room</figcaption>
+      </figure>
+
+      <figure class="gallery_item" data-category="executive">
+        <button class="gallery_media_btn" data-full="{{ url_for('static', filename='assets/Executive/Executive7.jpg') }}" data-caption="Executive Room - contemporary styling with generous layout">
+          <img src="{{ url_for('static', filename='assets/Executive/Executive7.jpg') }}" alt="Executive Room with contemporary styling and spacious layout">
+        </button>
+        <figcaption>Executive Room</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<div class="gallery_lightbox" id="galleryLightbox" aria-hidden="true">
+  <button class="gallery_lightbox_close" id="galleryLightboxClose" aria-label="Close image preview">&times;</button>
+  <img id="galleryLightboxImage" src="" alt="Expanded gallery image preview">
+  <p id="galleryLightboxCaption"></p>
+</div>
